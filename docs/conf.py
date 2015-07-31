@@ -51,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'SortedCollections'
+project = u'Sorted Collections'
 copyright = u'2015, Grant Jenks'
 author = u'Grant Jenks'
 
