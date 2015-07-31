@@ -7,5 +7,5 @@ python:
   - "3.4"
   - "pypy"
   - "pypy3"
-install: true
+install: "pip install sortedcontainers"
 script:  nosetests -v
