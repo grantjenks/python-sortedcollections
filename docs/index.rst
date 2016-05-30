@@ -1,22 +1,27 @@
 SortedCollections
 =================
 
-.. image:: https://api.travis-ci.org/grantjenks/sortedcollections.svg
-    :target: http://www.grantjenks.com/docs/sortedcollections/
-
-SortedCollections is an Apache2 licensed sorted collections library.
+`SortedCollections`_ is an Apache2 licensed Python sorted collections library.
 
 Features
 --------
 
 - Pure-Python
-- ItemSortedDict: expects key-function with (key, value) item pair parameters.
+- Depends on the `SortedContainers
+  <http://www.grantjenks.com/docs/sortedcontainers/>`_ module.
+- ValueSortedDict - Dictionary with (key, value) item pairs sorted by value.
+- ItemSortedDict - Dictionary with key-function support for item pairs.
+- OrderedDict - Ordered dictionary with numeric indexing support.
+- OrderedSet - Ordered set with numeric indexing support.
+- IndexableDict - Dictionary with numeric indexing support.
+- IndexableSet - Set with numeric indexing support.
+- SegmentList - List with fast random access insertion and deletion.
 
 Quickstart
 ----------
 
-Installing SortedContainers is simple with
-`pip <http://www.pip-installer.org/>`_::
+Installing `SortedCollections`_ is simple with `pip
+<http://www.pip-installer.org/>`_::
 
     $ pip install sortedcollections
 
@@ -25,20 +30,31 @@ function:
 
 ::
 
-    >>> from sortedcollections import ItemSortedDict
-    >>> help(ItemSortedDict)
+    >>> from sortedcollections import ValueSortedDict
+    >>> help(ValueSortedDict)
 
-Reference and Indices
----------------------
+Recipes
+-------
 
 .. toctree::
 
-   api
+   valuesorteddict
+   itemsorteddict
+   ordereddict
+   orderedset
+   indexabledict
+   indexableset
+   segmentlist
+
+Reference and Indices
+---------------------
 
 - `SortedCollections Documentation`_
 - `SortedCollections at PyPI`_
 - `SortedCollections at Github`_
 - `SortedCollections Issue Tracker`_
+- :ref:`SortedCollections Index <genindex>`
+- :ref:`Search SortedCollections Documentation <search>`
 
 .. _`SortedCollections Documentation`: http://www.grantjenks.com/docs/sortedcollections/
 .. _`SortedCollections at PyPI`: https://pypi.python.org/pypi/sortedcollections
@@ -49,3 +65,5 @@ SortedCollections License
 -------------------------
 
 .. include:: ../LICENSE
+
+.. _`SortedCollections`: http://www.grantjenks.com/docs/sortedcollections/
