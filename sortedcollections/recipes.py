@@ -47,7 +47,30 @@ class ItemSortedDict(SortedDict):
 
 
 class ValueSortedDict(SortedDict):
-    "SortedDict that maintains (key, value) item pairs sorted by value."
+    """Sorted dictionary that maintains (key, value) item pairs sorted by value.
+
+    - ``ValueSortedDict()`` -> new empty dictionary.
+
+    - ``ValueSortedDict(mapping)`` -> new dictionary initialized from a mapping
+      object's (key, value) pairs.
+
+    - ``ValueSortedDict(iterable)`` -> new dictionary initialized as if via::
+
+        d = ValueSortedDict()
+        for k, v in iterable:
+            d[k] = v
+
+    - ``ValueSortedDict(**kwargs)`` -> new dictionary initialized with the
+      name=value pairs in the keyword argument list.  For example::
+
+        ValueSortedDict(one=1, two=2)
+
+    An optional key function callable may be specified as the first
+    argument. When so, the callable will be applied to the value of each item
+    pair to determine the comparable for sort order as with Python's builtin
+    ``sorted`` function.
+
+    """
     def __init__(self, *args, **kwargs):
         args = list(args)
         if args and callable(args[0]):
@@ -66,12 +89,14 @@ class ValueSortedDict(SortedDict):
         super(ValueSortedDict, self).__init__(*args, **kwargs)
 
     def __delitem__(self, key):
+        "``del mapping[key]``"
         if key not in self:
             raise KeyError(key)
         self._list_remove(key)
         self._delitem(key)
 
     def __setitem__(self, key, value):
+        "``mapping[key] = value``"
         if key in self:
             self._list_remove(key)
             self._delitem(key)
@@ -79,7 +104,7 @@ class ValueSortedDict(SortedDict):
         self._list_add(key)
 
     def copy(self):
-        "Return shallow copy of the sorted dictionary."
+        "Return shallow copy of the mapping."
         return self.__class__(self._func, self._load, self.iteritems())
 
     __copy__ = copy
