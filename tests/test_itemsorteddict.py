@@ -1,12 +1,7 @@
-# -*- coding: utf-8 -*-
+"Test sortedcollections.ItemSortedDict"
 
-from .context import sortedcollections
+from nose.tools import raises
 from sortedcollections import ItemSortedDict
-
-from sys import hexversion
-
-if hexversion < 0x03000000:
-    range = xrange
 
 def key_func(key, value):
     return key
@@ -46,8 +41,14 @@ def test_delitem():
     del temp[25]
     assert temp.iloc[0] == 24
 
+@raises(KeyError)
+def test_delitem_error():
+    temp = ItemSortedDict(value_func, enumerate(reversed(alphabet)))
+    del temp[-1]
+
 def test_setitem():
     temp = ItemSortedDict(value_func, enumerate(reversed(alphabet)))
+    temp[25] = '!'
     del temp[25]
     assert temp.iloc[0] == 24
     temp[25] = 'a'
