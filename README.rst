@@ -1,5 +1,5 @@
-SortedCollections
-=================
+Python SortedCollections
+========================
 
 .. image:: https://api.travis-ci.org/grantjenks/sortedcollections.svg
     :target: http://www.grantjenks.com/docs/sortedcollections/
@@ -37,6 +37,8 @@ function:
     >>> from sortedcollections import ValueSortedDict
     >>> help(ValueSortedDict)
 
+.. _`SortedCollections`: http://www.grantjenks.com/docs/sortedcollections/
+
 Recipes
 -------
 
@@ -65,7 +67,6 @@ Reference and Indices
 - `SortedCollections Issue Tracker`_
 
 .. _`SortedCollections Documentation`: http://www.grantjenks.com/docs/sortedcollections/
-.. _`SortedCollections API Reference`: http://www.grantjenks.com/docs/sortedcollections/api.html
 .. _`SortedCollections at PyPI`: https://pypi.python.org/pypi/sortedcollections
 .. _`SortedCollections at Github`: https://github.com/grantjenks/sortedcollections
 .. _`SortedCollections Issue Tracker`: https://github.com/grantjenks/sortedcollections/issues
@@ -86,5 +87,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
-.. _`SortedCollections`: http://www.grantjenks.com/docs/sortedcollections/
