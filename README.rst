@@ -4,35 +4,62 @@ SortedCollections
 .. image:: https://api.travis-ci.org/grantjenks/sortedcollections.svg
     :target: http://www.grantjenks.com/docs/sortedcollections/
 
-SortedCollections is an Apache2 licensed sorted collections library.
+`SortedCollections`_ is an Apache2 licensed Python sorted collections library.
 
 Features
 --------
 
 - Pure-Python
-- ItemSortedDict: expects key-function with (key, value) item pair parameters.
+- Depends on the `SortedContainers
+  <http://www.grantjenks.com/docs/sortedcontainers/>`_ module.
+- ValueSortedDict - Dictionary with (key, value) item pairs sorted by value.
+- ItemSortedDict - Dictionary with key-function support for item pairs.
+- OrderedDict - Ordered dictionary with numeric indexing support.
+- OrderedSet - Ordered set with numeric indexing support.
+- IndexableDict - Dictionary with numeric indexing support.
+- IndexableSet - Set with numeric indexing support.
+- SegmentList - List with fast random access insertion and deletion.
+- 100% code coverage testing.
 
 Quickstart
 ----------
 
-Installing SortedContainers is simple with
-`pip <http://www.pip-installer.org/>`_::
+Installing `SortedCollections`_ is simple with `pip
+<http://www.pip-installer.org/>`_::
 
-    > pip install sortedcollections
+    $ pip install sortedcollections
 
 You can access documentation in the interpreter with Python's built-in help
 function:
 
 ::
 
-    >>> from sortedcollections import ItemSortedDict
-    >>> help(ItemSortedDict)
+    >>> from sortedcollections import ValueSortedDict
+    >>> help(ValueSortedDict)
+
+Recipes
+-------
+
+- `Value Sorted Dictionary Recipe`_
+- `Item Sorted Dictionary Recipe`_
+- `Ordered Dictionary Recipe`_
+- `Ordered Set Recipe`_
+- `Indexable Dictionary Recipe`_
+- `Indexable Set Recipe`_
+- `Segment List Recipe`_
+
+.. _`Value Sorted Dictionary Recipe`: http://www.grantjenks.com/docs/sortedcollections/valuesorteddict.html
+.. _`Item Sorted Dictionary Recipe`: http://www.grantjenks.com/docs/sortedcollections/itemsorteddict.html
+.. _`Ordered Dictionary Recipe`: http://www.grantjenks.com/docs/sortedcollections/ordereddict.html
+.. _`Ordered Set Recipe`: http://www.grantjenks.com/docs/sortedcollections/orderedset.html
+.. _`Indexable Dictionary Recipe`: http://www.grantjenks.com/docs/sortedcollections/indexabledict.html
+.. _`Indexable Set Recipe`: http://www.grantjenks.com/docs/sortedcollections/indexableset.html
+.. _`Segment List Recipe`: http://www.grantjenks.com/docs/sortedcollections/segmentlist.html
 
 Reference and Indices
 ---------------------
 
 - `SortedCollections Documentation`_
-- `SortedCollections API Reference`_
 - `SortedCollections at PyPI`_
 - `SortedCollections at Github`_
 - `SortedCollections Issue Tracker`_
@@ -59,3 +86,5 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+.. _`SortedCollections`: http://www.grantjenks.com/docs/sortedcollections/

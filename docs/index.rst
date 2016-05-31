@@ -16,6 +16,7 @@ Features
 - IndexableDict - Dictionary with numeric indexing support.
 - IndexableSet - Set with numeric indexing support.
 - SegmentList - List with fast random access insertion and deletion.
+- 100% code coverage testing.
 
 Quickstart
 ----------
