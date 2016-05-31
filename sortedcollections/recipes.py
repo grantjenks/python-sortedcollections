@@ -1,3 +1,7 @@
+"""Sorted collections recipes implementations.
+
+"""
+
 import collections as co
 from itertools import count
 from sortedcontainers import SortedListWithKey, SortedDict, SortedSet
@@ -64,6 +68,7 @@ class ItemSortedDict(SortedDict):
         args = list(args)
         func = self._func = args[0]
         def key_func(key):
+            "Apply key function to (key, value) item pair."
             return func(key, self[key])
         args[0] = key_func
         super(ItemSortedDict, self).__init__(*args, **kwargs)
@@ -120,11 +125,13 @@ class ValueSortedDict(SortedDict):
         if args and callable(args[0]):
             func = self._func = args[0]
             def key_func(key):
+                "Apply key function to ``mapping[value]``."
                 return func(self[key])
             args[0] = key_func
         else:
             self._func = None
             def key_func(key):
+                "Return mapping value for key."
                 return self[key]
             if args and args[0] is None:
                 args[0] = key_func
@@ -192,7 +199,7 @@ class OrderedSet(co.MutableSet, co.Sequence):
     def __getitem__(self, index):
         "``ordered_set[index]`` -> element; lookup element at index."
         _nums = self._nums
-        num = _nums._list[index]
+        num = _nums.iloc[index]
         return _nums[num]
 
     def __len__(self):
@@ -238,7 +245,7 @@ class SegmentList(SortedListWithKey):
         super(SegmentList, self).__init__(iterable, self.zero)
 
     @staticmethod
-    def zero(value):
+    def zero(_):
         "Return 0."
         return 0
 

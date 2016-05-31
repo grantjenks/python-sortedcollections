@@ -1,19 +1,25 @@
+"""Ordered dictionary implementation.
+
+"""
+
 import collections as co
 from itertools import count
 from operator import eq
-from sortedcontainers import SortedDict
-from sortedcontainers.sortedlist import recursive_repr
 import sys
 
+from sortedcontainers import SortedDict
+from sortedcontainers.sortedlist import recursive_repr
+
 if sys.hexversion < 0x03000000:
-    from itertools import imap
-    map = imap
+    from itertools import imap # pylint: disable=wrong-import-order, ungrouped-imports
+    map = imap # pylint: disable=redefined-builtin, invalid-name
 
 NONE = object()
 
 
 class KeysView(co.KeysView):
     "Read-only view of mapping keys."
+    # pylint: disable=too-few-public-methods
     def __reversed__(self):
         "``reversed(keys_view)``"
         return reversed(self._mapping)
@@ -21,6 +27,7 @@ class KeysView(co.KeysView):
 
 class ItemsView(co.ItemsView):
     "Read-only view of mapping items."
+    # pylint: disable=too-few-public-methods
     def __reversed__(self):
         "``reversed(items_view)``"
         for key in reversed(self._mapping):
@@ -29,6 +36,7 @@ class ItemsView(co.ItemsView):
 
 class ValuesView(co.ValuesView):
     "Read-only view of mapping values."
+    # pylint: disable=too-few-public-methods
     def __reversed__(self):
         "``reversed(values_view)``"
         for key in reversed(self._mapping):
@@ -37,6 +45,7 @@ class ValuesView(co.ValuesView):
 
 class SequenceView(object):
     "Read-only view of mapping keys as sequence."
+    # pylint: disable=too-few-public-methods
     def __init__(self, nums):
         self._nums = nums
 
@@ -64,6 +73,7 @@ class OrderedDict(dict):
     The ``iloc`` attribute behaves as a sequence-view for the mapping.
 
     """
+    # pylint: disable=super-init-not-called
     def __init__(self, *args, **kwargs):
         self._keys = {}
         self._nums = nums = SortedDict()
@@ -215,6 +225,7 @@ class OrderedDict(dict):
 
     def _check(self):
         "Check consistency of internal member variables."
+        # pylint: disable=protected-access
         keys = self._keys
         nums = self._nums
 
