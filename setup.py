@@ -19,7 +19,7 @@ with open('README.rst') as fptr:
 
 setup(
     name='sortedcollections',
-    version='0.4.2',
+    version='0.5.3',
     description='Python Sorted Collections',
     long_description=readme,
     author='Grant Jenks',
@@ -44,6 +44,7 @@ setup(
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
     ),

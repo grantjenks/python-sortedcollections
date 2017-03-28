@@ -17,8 +17,8 @@ from .recipes import OrderedSet, SegmentList
 from .ordereddict import OrderedDict
 
 __title__ = 'sortedcollections'
-__version__ = '0.5.2'
-__build__ = 0x000502
+__version__ = '0.5.3'
+__build__ = 0x000503
 __author__ = 'Grant Jenks'
 __license__ = 'Apache 2.0'
 __copyright__ = 'Copyright 2015-2016 Grant Jenks'
