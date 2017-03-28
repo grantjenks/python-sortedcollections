@@ -5,6 +5,7 @@
 import collections as co
 from itertools import count
 from sortedcontainers import SortedListWithKey, SortedDict, SortedSet
+from sortedcontainers.sortedlist import recursive_repr
 
 
 class IndexableDict(SortedDict):
@@ -159,6 +160,23 @@ class ValueSortedDict(SortedDict):
         return self.__class__(self._func, self._load, self.iteritems())
 
     __copy__ = copy
+
+    def __reduce__(self):
+        items = [(key, self[key]) for key in self._list]
+        args = (self._func, self._load, items)
+        return (self.__class__, args)
+
+    @recursive_repr
+    def __repr__(self):
+        temp = '{0}({1}, {2}, {{{3}}})'
+        items = ', '.join('{0}: {1}'.format(repr(key), repr(self[key]))
+                          for key in self._list)
+        return temp.format(
+            self.__class__.__name__,
+            repr(self._func),
+            repr(self._load),
+            items
+        )
 
 
 class OrderedSet(co.MutableSet, co.Sequence):

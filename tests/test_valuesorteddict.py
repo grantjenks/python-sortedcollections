@@ -1,5 +1,6 @@
 "Test sortedcollections.ValueSortedDict"
 
+import pickle
 from nose.tools import raises
 from sortedcollections import ValueSortedDict
 
@@ -56,3 +57,19 @@ def test_copy():
     that = temp.copy()
     assert temp == that
     assert temp._key != that._key
+
+def test_pickle():
+    original = ValueSortedDict(identity, enumerate(reversed(alphabet)))
+    data = pickle.dumps(original)
+    duplicate = pickle.loads(data)
+    assert original == duplicate
+
+class Negater(object):
+    def __call__(self, value):
+        return -value
+    def __repr__(self):
+        return 'negate'
+
+def test_repr():
+    temp = ValueSortedDict(Negater())
+    assert repr(temp) == 'ValueSortedDict(negate, 1000, {})'
