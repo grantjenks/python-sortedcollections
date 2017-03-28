@@ -20,6 +20,8 @@ Features
 - IndexableSet - Set with numeric indexing support.
 - SegmentList - List with fast random access insertion and deletion.
 - 100% code coverage testing.
+- Tested on CPython 2.6, 2.7, 3.2, 3.3, 3.4, 3.5, and 3.6.
+- Tested on PyPy and PyPy3.
 
 Quickstart
 ----------
