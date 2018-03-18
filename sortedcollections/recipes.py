@@ -91,7 +91,7 @@ class ItemSortedDict(SortedDict):
 
     def copy(self):
         "Return shallow copy of the mapping."
-        return self.__class__(self._func, self._load, self.iteritems())
+        return self.__class__(self._func, self.iteritems())
 
     __copy__ = copy
 
@@ -157,24 +157,23 @@ class ValueSortedDict(SortedDict):
 
     def copy(self):
         "Return shallow copy of the mapping."
-        return self.__class__(self._func, self._load, self.iteritems())
+        return self.__class__(self._func, self.iteritems())
 
     __copy__ = copy
 
     def __reduce__(self):
         items = [(key, self[key]) for key in self._list]
-        args = (self._func, self._load, items)
+        args = (self._func, items)
         return (self.__class__, args)
 
     @recursive_repr
     def __repr__(self):
-        temp = '{0}({1}, {2}, {{{3}}})'
+        temp = '{0}({1}, {{{2}}})'
         items = ', '.join('{0}: {1}'.format(repr(key), repr(self[key]))
                           for key in self._list)
         return temp.format(
             self.__class__.__name__,
             repr(self._func),
-            repr(self._load),
             items
         )
 

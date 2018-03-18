@@ -72,4 +72,4 @@ class Negater(object):
 
 def test_repr():
     temp = ValueSortedDict(Negater())
-    assert repr(temp) == 'ValueSortedDict(negate, 1000, {})'
+    assert repr(temp) == 'ValueSortedDict(negate, {})'
