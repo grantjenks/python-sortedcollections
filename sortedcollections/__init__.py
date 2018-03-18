@@ -2,7 +2,7 @@
 
 SortedCollections is an Apache2 licensed Python sorted collections library.
 
-:copyright: (c) 2015-206 by Grant Jenks.
+:copyright: (c) 2015-2018 by Grant Jenks.
 :license: Apache 2.0, see LICENSE for more details.
 
 """
@@ -17,8 +17,8 @@ from .recipes import OrderedSet, SegmentList
 from .ordereddict import OrderedDict
 
 __title__ = 'sortedcollections'
-__version__ = '0.5.3'
-__build__ = 0x000503
+__version__ = '0.6.0'
+__build__ = 0x000600
 __author__ = 'Grant Jenks'
 __license__ = 'Apache 2.0'
-__copyright__ = 'Copyright 2015-2016 Grant Jenks'
+__copyright__ = 'Copyright 2015-2018 Grant Jenks'
