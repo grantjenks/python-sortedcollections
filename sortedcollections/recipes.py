@@ -65,7 +65,7 @@ class ItemSortedDict(SortedDict):
 
     """
     def __init__(self, *args, **kwargs):
-        assert len(args) > 0 and callable(args[0])
+        assert args and callable(args[0])
         args = list(args)
         func = self._func = args[0]
         def key_func(key):
@@ -192,6 +192,7 @@ class OrderedSet(co.MutableSet, co.Sequence):
 
     """
     def __init__(self, iterable=()):
+        # pylint: disable=super-init-not-called
         self._keys = {}
         self._nums = SortedDict()
         self._count = count()
@@ -223,23 +224,23 @@ class OrderedSet(co.MutableSet, co.Sequence):
         "``len(ordered_set)``"
         return len(self._keys)
 
-    def index(self, key):
-        "Return index of key."
+    def index(self, value):
+        "Return index of value."
         try:
-            return self._keys[key]
+            return self._keys[value]
         except KeyError:
-            raise ValueError('%r is not in %s' % (key, type(self).__name__))
+            raise ValueError('%r is not in %s' % (value, type(self).__name__))
 
-    def add(self, key):
-        "Add element, key, to set."
-        if key not in self._keys:
+    def add(self, value):
+        "Add element, value, to set."
+        if value not in self._keys:
             num = next(self._count)
-            self._keys[key] = num
-            self._nums[num] = key
+            self._keys[value] = num
+            self._nums[num] = value
 
-    def discard(self, key):
-        "Remove element, key, from set if it is a member."
-        num = self._keys.pop(key, None)
+    def discard(self, value):
+        "Remove element, value, from set if it is a member."
+        num = self._keys.pop(value, None)
         if num is not None:
             del self._nums[num]
 

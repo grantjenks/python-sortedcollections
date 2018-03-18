@@ -218,8 +218,7 @@ class OrderedDict(dict):
         "Test self and other mapping for equality."
         if isinstance(other, OrderedDict):
             return dict.__eq__(self, other) and all(map(eq, self, other))
-        else:
-            return dict.__eq__(self, other)
+        return dict.__eq__(self, other)
 
     __ne__ = co.MutableMapping.__ne__
 
