@@ -19,20 +19,19 @@ NONE = object()
 
 class KeysView(co.KeysView, co.Sequence):
     "Read-only view of mapping keys."
-    # pylint: disable=too-few-public-methods
+    # pylint: disable=too-few-public-methods,protected-access
     def __getitem__(self, index):
         "``keys_view[index]``"
         _nums = self._mapping._nums
         if isinstance(index, slice):
             nums = _nums._list[index]
             return [_nums[num] for num in nums]
-        else:
-            return _nums[_nums._list[index]]
+        return _nums[_nums._list[index]]
 
 
 class ItemsView(co.ItemsView, co.Sequence):
     "Read-only view of mapping items."
-    # pylint: disable=too-few-public-methods
+    # pylint: disable=too-few-public-methods,protected-access
     def __getitem__(self, index):
         "``items_view[index]``"
         _mapping = self._mapping
@@ -41,15 +40,14 @@ class ItemsView(co.ItemsView, co.Sequence):
             nums = _nums._list[index]
             keys = [_nums[num] for num in nums]
             return [(key, _mapping[key]) for key in keys]
-        else:
-            num = _nums._list[index]
-            key = _nums[num]
-            return key, _mapping[key]
+        num = _nums._list[index]
+        key = _nums[num]
+        return key, _mapping[key]
 
 
 class ValuesView(co.ValuesView, co.Sequence):
     "Read-only view of mapping values."
-    # pylint: disable=too-few-public-methods
+    # pylint: disable=too-few-public-methods,protected-access
     def __getitem__(self, index):
         "``items_view[index]``"
         _mapping = self._mapping
@@ -58,10 +56,9 @@ class ValuesView(co.ValuesView, co.Sequence):
             nums = _nums._list[index]
             keys = [_nums[num] for num in nums]
             return [_mapping[key] for key in keys]
-        else:
-            num = _nums._list[index]
-            key = _nums[num]
-            return _mapping[key]
+        num = _nums._list[index]
+        key = _nums[num]
+        return _mapping[key]
 
 
 class OrderedDict(dict):
@@ -103,7 +100,7 @@ class OrderedDict(dict):
 
     def __iter__(self):
         "``iter(ordered_dict)``"
-        return self._nums.itervalues()
+        return iter(self._nums.values())
 
     def __reversed__(self):
         "``reversed(ordered_dict)``"
@@ -134,7 +131,6 @@ class OrderedDict(dict):
 
     def keys(self):
         "Return set-like and sequence-like view of mapping keys."
-        "List of keys in mapping."
         return KeysView(self)
 
     def items(self):

@@ -11,7 +11,7 @@ py==1.4.30
 pytz==2015.4
 six==1.9.0
 snowballstemmer==1.2.0
-sortedcontainers==0.9.6
+sortedcontainers
 sphinx-rtd-theme==0.1.8
 tox==2.1.1
 virtualenv==13.1.0

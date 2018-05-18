@@ -84,7 +84,7 @@ class ItemSortedDict(SortedDict):
 
     def copy(self):
         "Return shallow copy of the mapping."
-        return self.__class__(self._func, self.iteritems())
+        return self.__class__(self._func, iter(self.items()))
 
     __copy__ = copy
 
@@ -150,7 +150,7 @@ class ValueSortedDict(SortedDict):
 
     def copy(self):
         "Return shallow copy of the mapping."
-        return self.__class__(self._func, self.iteritems())
+        return self.__class__(self._func, iter(self.items()))
 
     __copy__ = copy
 
@@ -202,7 +202,7 @@ class OrderedSet(co.MutableSet, co.Sequence):
 
     def __iter__(self):
         "``iter(ordered_set)``"
-        return self._nums.itervalues()
+        return iter(self._nums.values())
 
     def __reversed__(self):
         "``reversed(ordered_set)``"
