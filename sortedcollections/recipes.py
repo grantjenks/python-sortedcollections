@@ -4,24 +4,21 @@
 
 import collections as co
 from itertools import count
-from sortedcontainers import SortedListWithKey, SortedDict, SortedSet
+from sortedcontainers import SortedKeyList, SortedDict, SortedSet
 from sortedcontainers.sortedlist import recursive_repr
 
 
 class IndexableDict(SortedDict):
     """Dictionary that supports numerical indexing.
 
-    Keys are numerically indexable using the ``iloc`` attribute. For example::
+    Keys are numerically indexable using dict views. For example::
 
         >>> indexable_dict = IndexableDict.fromkeys('abcde')
-        >>> indexable_dict.keys()
-        ['b', 'd', 'e', 'c', 'a']
-        >>> indexable_dict.iloc[0]
-        'b'
-        >>> indexable_dict.iloc[-2:]
-        ['c', 'a']
+        >>> keys = indexable_dict.keys()
+        >>> sorted(keys[:]) == ['a', 'b', 'c', 'd', 'e']
+        True
 
-    The ``iloc`` attribute behaves as a sequence-view for the mapping.
+    The dict views support the sequence abstract base class.
 
     """
     def __init__(self, *args, **kwargs):
@@ -31,17 +28,13 @@ class IndexableDict(SortedDict):
 class IndexableSet(SortedSet):
     """Set that supports numerical indexing.
 
-    For example::
+    Values are numerically indexable. For example::
 
         >>> indexable_set = IndexableSet('abcde')
-        >>> list(indexable_set)
-        ['d', 'e', 'c', 'b', 'a']
-        >>> indexable_set[0]
-        'd'
-        >>> indexable_set[-2:]
-        ['b', 'a']
+        >>> sorted(indexable_set[:]) == ['a', 'b', 'c', 'd', 'e']
+        True
 
-    IndexableSet implements the collections.Sequence interface.
+    `IndexableSet` implements the sequence abstract base class.
 
     """
     def __init__(self, *args, **kwargs):
@@ -79,14 +72,14 @@ class ItemSortedDict(SortedDict):
         if key not in self:
             raise KeyError(key)
         self._list_remove(key)
-        self._delitem(key)
+        self._dict_delitem(key)
 
     def __setitem__(self, key, value):
         "``mapping[key] = value``"
         if key in self:
             self._list_remove(key)
-            self._delitem(key)
-        self._setitem(key, value)
+            self._dict_delitem(key)
+        self._dict_setitem(key, value)
         self._list_add(key)
 
     def copy(self):
@@ -145,14 +138,14 @@ class ValueSortedDict(SortedDict):
         if key not in self:
             raise KeyError(key)
         self._list_remove(key)
-        self._delitem(key)
+        self._dict_delitem(key)
 
     def __setitem__(self, key, value):
         "``mapping[key] = value``"
         if key in self:
             self._list_remove(key)
-            self._delitem(key)
-        self._setitem(key, value)
+            self._dict_delitem(key)
+        self._dict_setitem(key, value)
         self._list_add(key)
 
     def copy(self):
@@ -166,7 +159,7 @@ class ValueSortedDict(SortedDict):
         args = (self._func, items)
         return (self.__class__, args)
 
-    @recursive_repr
+    @recursive_repr()
     def __repr__(self):
         temp = '{0}({1}, {{{2}}})'
         items = ', '.join('{0}: {1}'.format(repr(key), repr(self[key]))
@@ -185,8 +178,10 @@ class OrderedSet(co.MutableSet, co.Sequence):
 
         >>> ordered_set = OrderedSet('abcde')
         >>> list(ordered_set) == list('abcde')
+        True
         >>> ordered_set = OrderedSet('edcba')
         >>> list(ordered_set) == list('edcba')
+        True
 
     OrderedSet also implements the collections.Sequence interface.
 
@@ -195,6 +190,7 @@ class OrderedSet(co.MutableSet, co.Sequence):
         # pylint: disable=super-init-not-called
         self._keys = {}
         self._nums = SortedDict()
+        self._keys_view = self._nums.keys()
         self._count = count()
         self |= iterable
 
@@ -216,9 +212,8 @@ class OrderedSet(co.MutableSet, co.Sequence):
 
     def __getitem__(self, index):
         "``ordered_set[index]`` -> element; lookup element at index."
-        _nums = self._nums
-        num = _nums.iloc[index]
-        return _nums[num]
+        num = self._keys_view[index]
+        return self._nums[num]
 
     def __len__(self):
         "``len(ordered_set)``"
@@ -251,7 +246,7 @@ class OrderedSet(co.MutableSet, co.Sequence):
     __str__ = __repr__
 
 
-class SegmentList(SortedListWithKey):
+class SegmentList(SortedKeyList):
     """List that supports fast random insertion and deletion of elements.
 
     SegmentList is a special case of a SortedList initialized with a key
@@ -267,9 +262,49 @@ class SegmentList(SortedListWithKey):
         "Return 0."
         return 0
 
+    def __setitem__(self, index, value):
+        if isinstance(index, slice):
+            raise NotImplementedError
+        pos, idx = self._pos(index)
+        self._lists[pos][idx] = value
+
+    def append(self, value):
+        if self._len:
+            pos = len(self._lists) - 1
+            self._lists[pos].append(value)
+            self._keys[pos].append(0)
+            self._expand(pos)
+        else:
+            self._lists.append([value])
+            self._keys.append([0])
+            self._maxes.append(0)
+        self._len += 1
+
+    def extend(self, values):
+        for value in values:
+            self.append(value)
+
+    def insert(self, index, value):
+        if index == self._len:
+            self.append(value)
+            return
+        pos, idx = self._pos(index)
+        self._lists[pos].insert(idx, value)
+        self._keys[pos].insert(idx, 0)
+        self._expand(pos)
+        self._len += 1
+
+    def reverse(self):
+        values = list(self)
+        values.reverse()
+        self.clear()
+        self.extend(values)
+
     def sort(self, key=None, reverse=False):
         "Stable sort in place."
-        self[:] = sorted(self, key=key, reverse=reverse)
+        values = sorted(self, key=key, reverse=reverse)
+        self.clear()
+        self.extend(values)
 
     def _not_implemented(self, *args, **kwargs):
         "Not implemented."
@@ -283,4 +318,5 @@ class SegmentList(SortedListWithKey):
     bisect_key_left = _not_implemented
     bisect_key_right = _not_implemented
     irange = _not_implemented
+    irange_key = _not_implemented
     update = _not_implemented

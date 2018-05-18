@@ -17,68 +17,74 @@ if sys.hexversion < 0x03000000:
 NONE = object()
 
 
-class KeysView(co.KeysView):
+class KeysView(co.KeysView, co.Sequence):
     "Read-only view of mapping keys."
     # pylint: disable=too-few-public-methods
-    def __reversed__(self):
-        "``reversed(keys_view)``"
-        return reversed(self._mapping)
+    def __getitem__(self, index):
+        "``keys_view[index]``"
+        _nums = self._mapping._nums
+        if isinstance(index, slice):
+            nums = _nums._list[index]
+            return [_nums[num] for num in nums]
+        else:
+            return _nums[_nums._list[index]]
 
 
-class ItemsView(co.ItemsView):
+class ItemsView(co.ItemsView, co.Sequence):
     "Read-only view of mapping items."
     # pylint: disable=too-few-public-methods
-    def __reversed__(self):
-        "``reversed(items_view)``"
-        for key in reversed(self._mapping):
-            yield key, self._mapping[key]
+    def __getitem__(self, index):
+        "``items_view[index]``"
+        _mapping = self._mapping
+        _nums = _mapping._nums
+        if isinstance(index, slice):
+            nums = _nums._list[index]
+            keys = [_nums[num] for num in nums]
+            return [(key, _mapping[key]) for key in keys]
+        else:
+            num = _nums._list[index]
+            key = _nums[num]
+            return key, _mapping[key]
 
 
-class ValuesView(co.ValuesView):
+class ValuesView(co.ValuesView, co.Sequence):
     "Read-only view of mapping values."
     # pylint: disable=too-few-public-methods
-    def __reversed__(self):
-        "``reversed(values_view)``"
-        for key in reversed(self._mapping):
-            yield self._mapping[key]
-
-
-class SequenceView(object):
-    "Read-only view of mapping keys as sequence."
-    # pylint: disable=too-few-public-methods
-    def __init__(self, nums):
-        self._nums = nums
-
-    def __len__(self):
-        "``len(sequence_view)``"
-        return len(self._nums)
-
     def __getitem__(self, index):
-        "``sequence_view[index]``"
-        num = self._nums.iloc[index]
-        return self._nums[num]
+        "``items_view[index]``"
+        _mapping = self._mapping
+        _nums = _mapping._nums
+        if isinstance(index, slice):
+            nums = _nums._list[index]
+            keys = [_nums[num] for num in nums]
+            return [_mapping[key] for key in keys]
+        else:
+            num = _nums._list[index]
+            key = _nums[num]
+            return _mapping[key]
 
 
 class OrderedDict(dict):
     """Dictionary that remembers insertion order and is numerically indexable.
 
-    Keys are numerically indexable using the ``iloc`` attribute. For example::
+    Keys are numerically indexable using dict views. For example::
 
         >>> ordered_dict = OrderedDict.fromkeys('abcde')
-        >>> ordered_dict.iloc[0]
+        >>> keys = ordered_dict.keys()
+        >>> keys[0]
         'a'
-        >>> ordered_dict.iloc[-2:]
+        >>> keys[-2:]
         ['d', 'e']
 
-    The ``iloc`` attribute behaves as a sequence-view for the mapping.
+    The dict views support the sequence abstract base class.
 
     """
     # pylint: disable=super-init-not-called
     def __init__(self, *args, **kwargs):
         self._keys = {}
-        self._nums = nums = SortedDict()
+        self._nums = SortedDict()
+        self._keys_view = self._nums.keys()
         self._count = count()
-        self.iloc = SequenceView(nums)
         self.update(*args, **kwargs)
 
     def __setitem__(self, key, value, dict_setitem=dict.__setitem__):
@@ -119,7 +125,7 @@ class OrderedDict(dict):
 
         """
         index = -1 if last else 0
-        num = self._nums.iloc[index]
+        num = self._keys_view[index]
         key = self._nums[num]
         value = self.pop(key)
         return key, value
@@ -127,41 +133,16 @@ class OrderedDict(dict):
     update = __update = co.MutableMapping.update
 
     def keys(self):
+        "Return set-like and sequence-like view of mapping keys."
         "List of keys in mapping."
-        return list(self.iterkeys())
-
-    def items(self):
-        "List of (key, value) item pairs in mapping."
-        return list(self.iteritems())
-
-    def values(self):
-        "List of values in mapping."
-        return list(self.itervalues())
-
-    def iterkeys(self):
-        "Return iterator over the keys in mapping."
-        return self._nums.itervalues()
-
-    def iteritems(self):
-        "Return iterator over the (key, value) item pairs in mapping."
-        for key in self._nums.itervalues():
-            yield key, self[key]
-
-    def itervalues(self):
-        "Return iterator over the values in mapping."
-        for key in self._nums.itervalues():
-            yield self[key]
-
-    def viewkeys(self):
-        "Return set-like object with view of mapping keys."
         return KeysView(self)
 
-    def viewitems(self):
-        "Return set-like object with view of mapping items."
+    def items(self):
+        "Return set-like and sequence-like view of mapping items."
         return ItemsView(self)
 
-    def viewvalues(self):
-        "Return object with view of mapping values."
+    def values(self):
+        "Return set-like and sequence-like view of mapping values."
         return ValuesView(self)
 
     def pop(self, key, default=NONE):
@@ -190,16 +171,16 @@ class OrderedDict(dict):
         self[key] = default
         return default
 
-    @recursive_repr
+    @recursive_repr()
     def __repr__(self):
         "Text representation of mapping."
-        return '%s(%r)' % (self.__class__.__name__, self.items())
+        return '%s(%r)' % (self.__class__.__name__, list(self.items()))
 
     __str__ = __repr__
 
     def __reduce__(self):
         "Support for pickling serialization."
-        return (self.__class__, (self.items(),))
+        return (self.__class__, (list(self.items()),))
 
     def copy(self):
         "Return shallow copy of mapping."

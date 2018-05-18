@@ -64,58 +64,30 @@ def test_popitem():
 
 def test_keys():
     od = OrderedDict(enumerate(range(10)))
-    assert od.keys() == list(range(10))
+    assert list(reversed(od.keys())) == list(reversed(range(10)))
+    assert od.keys()[:3] == [0, 1, 2]
     od._check()
 
 def test_items():
+    items = list(enumerate(range(10)))
     od = OrderedDict(enumerate(range(10)))
-    assert od.items() == list(enumerate(range(10)))
+    assert list(reversed(od.items())) == list(reversed(items))
+    assert od.items()[:3] == [(0, 0), (1, 1), (2, 2)]
     od._check()
 
 def test_values():
     od = OrderedDict(enumerate(range(10)))
-    assert od.values() == list(range(10))
-    od._check()
-
-def test_iterkeys():
-    od = OrderedDict(enumerate(range(10)))
-    assert list(od.iterkeys()) == list(range(10))
-    od._check()
-
-def test_iteritems():
-    od = OrderedDict(enumerate(range(10)))
-    assert list(od.iteritems()) == list(enumerate(range(10)))
-    od._check()
-
-def test_itervalues():
-    od = OrderedDict(enumerate(range(10)))
-    assert list(od.itervalues()) == list(range(10))
-    od._check()
-
-def test_viewkeys():
-    od = OrderedDict(enumerate(range(10)))
-    view = od.viewkeys()
-    assert list(reversed(view)) == list(reversed(range(10)))
-    od._check()
-
-def test_viewitems():
-    od = OrderedDict(enumerate(range(10)))
-    view = od.viewitems()
-    assert list(reversed(view)) == list(reversed(list(enumerate(range(10)))))
-    od._check()
-
-def test_viewvalues():
-    od = OrderedDict(enumerate(range(10)))
-    view = od.viewvalues()
-    assert list(reversed(view)) == list(reversed(range(10)))
+    assert list(reversed(od.values())) == list(reversed(range(10)))
+    assert od.values()[:3] == [0, 1, 2]
     od._check()
 
 def test_iloc():
     od = OrderedDict(enumerate(range(10)))
+    iloc = od.keys()
     for num in range(10):
-        assert od.iloc[num] == num
-    od.iloc[-1] == 9
-    assert len(od.iloc) == 10
+        assert iloc[num] == num
+    iloc[-1] == 9
+    assert len(iloc) == 10
     od._check()
 
 def test_pop():
