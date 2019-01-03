@@ -25,11 +25,10 @@ setup(
     author_email='contact@grantjenks.com',
     url='http://www.grantjenks.com/docs/sortedcollections/',
     license='Apache 2.0',
-    install_requires=['sortedcontainers'],
     packages=['sortedcollections'],
+    install_requires=['sortedcontainers'],
     tests_require=['tox'],
     cmdclass={'test': Tox},
-    install_requires=[],
     classifiers=(
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
