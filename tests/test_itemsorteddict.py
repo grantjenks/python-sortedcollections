@@ -60,3 +60,11 @@ def test_copy():
     that = temp.copy()
     assert temp == that
     assert temp._key != that._key
+
+def test_deepcopy():
+    from copy import deepcopy
+    temp = ItemSortedDict(value_func, enumerate(reversed(alphabet)))
+    that = deepcopy(temp)
+    assert temp == that
+    assert temp._key != that._key
+    
