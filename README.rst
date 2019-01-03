@@ -66,15 +66,15 @@ Recipes
 Reference and Indices
 ---------------------
 
-- `SortedCollections Documentation`_
-- `SortedCollections at PyPI`_
-- `SortedCollections at Github`_
-- `SortedCollections Issue Tracker`_
+- `Sorted Collections Documentation`_
+- `Sorted Collections at PyPI`_
+- `Sorted Collections at Github`_
+- `Sorted Collections Issue Tracker`_
 
-.. _`SortedCollections Documentation`: http://www.grantjenks.com/docs/sortedcollections/
-.. _`SortedCollections at PyPI`: https://pypi.python.org/pypi/sortedcollections
-.. _`SortedCollections at Github`: https://github.com/grantjenks/sortedcollections
-.. _`SortedCollections Issue Tracker`: https://github.com/grantjenks/sortedcollections/issues
+.. _`Sorted Collections Documentation`: http://www.grantjenks.com/docs/sortedcollections/
+.. _`Sorted Collections at PyPI`: https://pypi.python.org/pypi/sortedcollections/
+.. _`Sorted Collections at Github`: https://github.com/grantjenks/python-sortedcollections
+.. _`Sorted Collections Issue Tracker`: https://github.com/grantjenks/python-sortedcollections/issues
 
 Sorted Collections License
 --------------------------
