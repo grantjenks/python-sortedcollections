@@ -2,24 +2,33 @@
 
 """
 
-import collections as co
 from itertools import count
 from operator import eq
-import sys
 
 from sortedcontainers import SortedDict
 from sortedcontainers.sortedlist import recursive_repr
 
-if sys.hexversion < 0x03000000:
-    from itertools import imap # pylint: disable=no-name-in-module, ungrouped-imports, wrong-import-order
-    map = imap # pylint: disable=redefined-builtin, invalid-name
+from .recipes import abc
+
+###############################################################################
+# BEGIN Python 2/3 Shims
+###############################################################################
+
+from sys import hexversion  # pylint: disable=wrong-import-order
+
+if hexversion < 0x03000000:
+    from itertools import imap as map  # pylint: disable=no-name-in-module,redefined-builtin,ungrouped-imports
+
+###############################################################################
+# END Python 2/3 Shims
+###############################################################################
 
 NONE = object()
 
 
-class KeysView(co.KeysView, co.Sequence):
+class KeysView(abc.KeysView, abc.Sequence):
     "Read-only view of mapping keys."
-    # pylint: disable=too-few-public-methods,protected-access
+    # pylint: disable=too-few-public-methods,protected-access,too-many-ancestors
     def __getitem__(self, index):
         "``keys_view[index]``"
         _nums = self._mapping._nums
@@ -29,9 +38,9 @@ class KeysView(co.KeysView, co.Sequence):
         return _nums[_nums._list[index]]
 
 
-class ItemsView(co.ItemsView, co.Sequence):
+class ItemsView(abc.ItemsView, abc.Sequence):
     "Read-only view of mapping items."
-    # pylint: disable=too-few-public-methods,protected-access
+    # pylint: disable=too-few-public-methods,protected-access,too-many-ancestors
     def __getitem__(self, index):
         "``items_view[index]``"
         _mapping = self._mapping
@@ -45,9 +54,9 @@ class ItemsView(co.ItemsView, co.Sequence):
         return key, _mapping[key]
 
 
-class ValuesView(co.ValuesView, co.Sequence):
+class ValuesView(abc.ValuesView, abc.Sequence):
     "Read-only view of mapping values."
-    # pylint: disable=too-few-public-methods,protected-access
+    # pylint: disable=too-few-public-methods,protected-access,too-many-ancestors
     def __getitem__(self, index):
         "``items_view[index]``"
         _mapping = self._mapping
@@ -127,7 +136,7 @@ class OrderedDict(dict):
         value = self.pop(key)
         return key, value
 
-    update = __update = co.MutableMapping.update
+    update = __update = abc.MutableMapping.update
 
     def keys(self):
         "Return set-like and sequence-like view of mapping keys."
@@ -196,7 +205,7 @@ class OrderedDict(dict):
             return dict.__eq__(self, other) and all(map(eq, self, other))
         return dict.__eq__(self, other)
 
-    __ne__ = co.MutableMapping.__ne__
+    __ne__ = abc.MutableMapping.__ne__
 
     def _check(self):
         "Check consistency of internal member variables."

@@ -2,16 +2,23 @@
 
 """
 
-from collections import MutableSet, Sequence
 from copy import deepcopy
 from itertools import count
 from sortedcontainers import SortedKeyList, SortedDict, SortedSet
 from sortedcontainers.sortedlist import recursive_repr
-from sys import hexversion
 
-if hexversion < 0x03000000:
-    from itertools import imap # pylint: disable=no-name-in-module, ungrouped-imports, wrong-import-order
-    map = imap # pylint: disable=redefined-builtin, invalid-name
+###############################################################################
+# BEGIN Python 2/3 Shims
+###############################################################################
+
+try:
+    from collections import abc
+except ImportError:
+    import collections as abc
+
+###############################################################################
+# END Python 2/3 Shims
+###############################################################################
 
 
 class IndexableDict(SortedDict):
@@ -182,7 +189,7 @@ class ValueSortedDict(SortedDict):
         )
 
 
-class OrderedSet(MutableSet, Sequence):
+class OrderedSet(abc.MutableSet, abc.Sequence):
     """Like OrderedDict, OrderedSet maintains the insertion order of elements.
 
     For example::
@@ -197,6 +204,7 @@ class OrderedSet(MutableSet, Sequence):
     OrderedSet also implements the collections.Sequence interface.
 
     """
+    # pylint: disable=too-many-ancestors
     def __init__(self, iterable=()):
         # pylint: disable=super-init-not-called
         self._keys = {}
@@ -232,6 +240,7 @@ class OrderedSet(MutableSet, Sequence):
 
     def index(self, value):
         "Return index of value."
+        # pylint: disable=arguments-differ
         try:
             return self._keys[value]
         except KeyError:
