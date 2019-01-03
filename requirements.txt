@@ -4,6 +4,7 @@ gj
 pylint
 pytest
 pytest-cov
+rstcheck
 sortedcontainers
 sphinx
 tox
