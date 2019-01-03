@@ -1,5 +1,6 @@
 "Test sortedcollections.ValueSortedDict"
 
+import copy
 import pickle
 import pytest
 from sortedcollections import ValueSortedDict

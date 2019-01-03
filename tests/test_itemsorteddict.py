@@ -1,5 +1,6 @@
 "Test sortedcollections.ItemSortedDict"
 
+import copy
 import pytest
 from sortedcollections import ItemSortedDict
 
@@ -62,9 +63,7 @@ def test_copy():
     assert temp._key != that._key
 
 def test_deepcopy():
-    from copy import deepcopy
     temp = ItemSortedDict(value_func, enumerate(reversed(alphabet)))
-    that = deepcopy(temp)
+    that = copy.deepcopy(temp)
     assert temp == that
     assert temp._key != that._key
-    

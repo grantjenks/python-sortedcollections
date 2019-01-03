@@ -2,10 +2,16 @@
 
 """
 
-import collections as co
+from collections import MutableSet, Sequence
+from copy import deepcopy
 from itertools import count
 from sortedcontainers import SortedKeyList, SortedDict, SortedSet
 from sortedcontainers.sortedlist import recursive_repr
+from sys import hexversion
+
+if hexversion < 0x03000000:
+    from itertools import imap # pylint: disable=no-name-in-module, ungrouped-imports, wrong-import-order
+    map = imap # pylint: disable=redefined-builtin, invalid-name
 
 
 class IndexableDict(SortedDict):
@@ -88,6 +94,10 @@ class ItemSortedDict(SortedDict):
         return self.__class__(self._func, iter(self.items()))
 
     __copy__ = copy
+
+    def __deepcopy__(self, memo):
+        items = (deepcopy(item, memo) for item in self.items())
+        return self.__class__(self._func, items)
 
 
 class ValueSortedDict(SortedDict):
@@ -172,7 +182,7 @@ class ValueSortedDict(SortedDict):
         )
 
 
-class OrderedSet(co.MutableSet, co.Sequence):
+class OrderedSet(MutableSet, Sequence):
     """Like OrderedDict, OrderedSet maintains the insertion order of elements.
 
     For example::
