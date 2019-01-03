@@ -1,16 +1,13 @@
-Python SortedCollections
-========================
+Python Sorted Collections
+=========================
 
-.. image:: https://api.travis-ci.org/grantjenks/sortedcollections.svg
-    :target: http://www.grantjenks.com/docs/sortedcollections/
-
-`SortedCollections`_ is an Apache2 licensed Python sorted collections library.
+`Sorted Collections`_ is an Apache2 licensed Python sorted collections library.
 
 Features
 --------
 
 - Pure-Python
-- Depends on the `SortedContainers
+- Depends on the `Sorted Containers
   <http://www.grantjenks.com/docs/sortedcontainers/>`_ module.
 - ValueSortedDict - Dictionary with (key, value) item pairs sorted by value.
 - ItemSortedDict - Dictionary with key-function support for item pairs.
@@ -20,26 +17,32 @@ Features
 - IndexableSet - Set with numeric indexing support.
 - SegmentList - List with fast random access insertion and deletion.
 - 100% code coverage testing.
-- Tested on CPython 2.6, 2.7, 3.2, 3.3, 3.4, 3.5, and 3.6.
-- Tested on PyPy and PyPy3.
+- Developed on Python 3.7
+- Tested on CPython 2.7, 3.4, 3.5, 3.6, 3.7 and PyPy, PyPy3
+
+.. image:: https://api.travis-ci.org/grantjenks/python-sortedcollections.svg?branch=master
+    :target: http://www.grantjenks.com/docs/sortedcollections/
+
+.. image:: https://ci.appveyor.com/api/projects/status/github/grantjenks/python-sortedcollections?branch=master&svg=true
+   :target: http://www.grantjenks.com/docs/sortedcollections/
 
 Quickstart
 ----------
 
-Installing `SortedCollections`_ is simple with `pip
+Installing `Sorted Collections`_ is simple with `pip
 <http://www.pip-installer.org/>`_::
 
     $ pip install sortedcollections
 
-You can access documentation in the interpreter with Python's built-in help
+You can access documentation in the interpreter with Python's built-in `help`
 function:
 
-::
+.. code-block:: python
 
     >>> from sortedcollections import ValueSortedDict
     >>> help(ValueSortedDict)
 
-.. _`SortedCollections`: http://www.grantjenks.com/docs/sortedcollections/
+.. _`Sorted Collections`: http://www.grantjenks.com/docs/sortedcollections/
 
 Recipes
 -------
@@ -73,10 +76,10 @@ Reference and Indices
 .. _`SortedCollections at Github`: https://github.com/grantjenks/sortedcollections
 .. _`SortedCollections Issue Tracker`: https://github.com/grantjenks/sortedcollections/issues
 
-SortedCollections License
--------------------------
+Sorted Collections License
+--------------------------
 
-Copyright 2015-2016 Grant Jenks
+Copyright 2015-2019 Grant Jenks
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

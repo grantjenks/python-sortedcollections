@@ -1,6 +1,5 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 from setuptools.command.test import test as TestCommand
-import sys
 
 
 class Tox(TestCommand):
@@ -11,33 +10,33 @@ class Tox(TestCommand):
     def run_tests(self):
         import tox
         errno = tox.cmdline(self.test_args)
-        sys.exit(errno)
+        exit(errno)
 
 
-with open('README.rst') as fptr:
-    readme = fptr.read()
+with open('README.rst') as reader:
+    readme = reader.read()
 
 setup(
     name='sortedcollections',
-    version='1.0.1',
+    version='1.1.0',
     description='Python Sorted Collections',
     long_description=readme,
     author='Grant Jenks',
     author_email='contact@grantjenks.com',
     url='http://www.grantjenks.com/docs/sortedcollections/',
     license='Apache 2.0',
-    packages=find_packages(exclude=('tests', 'docs')),
     install_requires=['sortedcontainers'],
+    packages=['sortedcollections'],
     tests_require=['tox'],
     cmdclass={'test': Tox},
+    install_requires=[],
     classifiers=(
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.2',
@@ -45,6 +44,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
     ),

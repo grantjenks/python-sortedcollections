@@ -1,6 +1,6 @@
 "Test sortedcollections.ItemSortedDict"
 
-from nose.tools import raises
+import pytest
 from sortedcollections import ItemSortedDict
 
 def key_func(key, value):
@@ -41,10 +41,10 @@ def test_delitem():
     del temp[25]
     assert temp.keys()[0] == 24
 
-@raises(KeyError)
 def test_delitem_error():
     temp = ItemSortedDict(value_func, enumerate(reversed(alphabet)))
-    del temp[-1]
+    with pytest.raises(KeyError):
+        del temp[-1]
 
 def test_setitem():
     temp = ItemSortedDict(value_func, enumerate(reversed(alphabet)))

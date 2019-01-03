@@ -1,6 +1,6 @@
 "Test sortedcollections.recipes"
 
-from nose.tools import raises
+import pytest
 from sortedcollections import IndexableDict, IndexableSet, SegmentList
 
 
@@ -35,12 +35,12 @@ def test_segment_list():
     sl.insert(6, 'e')
     assert list(sl) == [0, 1, 'c', 'd', 3, 4, 'e']
 
-@raises(NotImplementedError)
 def test_segment_list_bisect():
     sl = SegmentList()
-    sl.bisect(0)
+    with pytest.raises(NotImplementedError):
+        sl.bisect(0)
 
-@raises(NotImplementedError)
 def test_segment_list_setitem_slice():
     sl = SegmentList()
-    sl[:] = [0]
+    with pytest.raises(NotImplementedError):
+        sl[:] = [0]

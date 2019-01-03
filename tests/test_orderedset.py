@@ -1,6 +1,6 @@
 "Test sortedcollections.OrderedSet."
 
-from nose.tools import raises
+import pytest
 import random
 from sortedcollections import OrderedSet
 
@@ -48,10 +48,10 @@ def test_index():
     for value in values:
         assert values.index(value) == os.index(value)
 
-@raises(ValueError)
 def test_index_error():
     os = OrderedSet(range(10))
-    os.index(10)
+    with pytest.raises(ValueError):
+        os.index(10)
 
 def test_add():
     os = OrderedSet()

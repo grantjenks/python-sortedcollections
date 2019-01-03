@@ -1,7 +1,7 @@
 "Test sortedcollections.OrderedDict"
 
-from nose.tools import raises
 import pickle
+import pytest
 from sortedcollections import OrderedDict
 
 pairs = dict(enumerate(range(10)))
@@ -99,10 +99,10 @@ def test_pop():
     assert od.pop(1, default='thing') == 'thing'
     od._check()
 
-@raises(KeyError)
 def test_pop_error():
     od = OrderedDict()
-    od.pop(0)
+    with pytest.raises(KeyError):
+        od.pop(0)
 
 def test_setdefault():
     od = OrderedDict()
