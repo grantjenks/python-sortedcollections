@@ -37,6 +37,7 @@ class IndexableSet(SortedSet):
     `IndexableSet` implements the sequence abstract base class.
 
     """
+    # pylint: disable=too-many-ancestors
     def __init__(self, *args, **kwargs):
         super(IndexableSet, self).__init__(*args, key=hash, **kwargs)
 
@@ -254,6 +255,7 @@ class SegmentList(SortedKeyList):
     implemented for SegmentList.
 
     """
+    # pylint: disable=too-many-ancestors
     def __init__(self, iterable=()):
         super(SegmentList, self).__init__(iterable, self.zero)
 

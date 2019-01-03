@@ -11,7 +11,7 @@ from sortedcontainers import SortedDict
 from sortedcontainers.sortedlist import recursive_repr
 
 if sys.hexversion < 0x03000000:
-    from itertools import imap # pylint: disable=wrong-import-order, ungrouped-imports
+    from itertools import imap # pylint: disable=no-name-in-module, ungrouped-imports, wrong-import-order
     map = imap # pylint: disable=redefined-builtin, invalid-name
 
 NONE = object()
@@ -152,10 +152,9 @@ class OrderedDict(dict):
             value = self[key]
             del self[key]
             return value
-        elif default is NONE:
+        if default is NONE:
             raise KeyError(key)
-        else:
-            return default
+        return default
 
     def setdefault(self, key, default=None):
         """Return ``mapping.get(key, default)``, also set ``mapping[key] = default`` if
