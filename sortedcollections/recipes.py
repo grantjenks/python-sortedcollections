@@ -96,6 +96,8 @@ class ItemSortedDict(SortedDict):
         self._dict_setitem(key, value)
         self._list_add(key)
 
+    _setitem = __setitem__
+
     def copy(self):
         "Return shallow copy of the mapping."
         return self.__class__(self._func, iter(self.items()))
@@ -165,6 +167,8 @@ class ValueSortedDict(SortedDict):
             self._dict_delitem(key)
         self._dict_setitem(key, value)
         self._list_add(key)
+
+    _setitem = __setitem__
 
     def copy(self):
         "Return shallow copy of the mapping."

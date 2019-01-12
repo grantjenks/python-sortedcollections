@@ -74,3 +74,9 @@ class Negater(object):
 def test_repr():
     temp = ValueSortedDict(Negater())
     assert repr(temp) == 'ValueSortedDict(negate, {})'
+
+def test_update():
+    temp = ValueSortedDict()
+    for index, letter in enumerate(alphabet):
+        pair = {index: letter}
+        temp.update(pair)

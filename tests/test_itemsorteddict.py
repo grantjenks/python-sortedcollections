@@ -67,3 +67,9 @@ def test_deepcopy():
     that = copy.deepcopy(temp)
     assert temp == that
     assert temp._key != that._key
+
+def test_update():
+    temp = ItemSortedDict(lambda key, value: value)
+    for index, letter in enumerate(alphabet):
+        pair = {index: letter}
+        temp.update(pair)
