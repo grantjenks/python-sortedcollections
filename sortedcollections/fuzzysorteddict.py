@@ -19,20 +19,20 @@ class FuzzySortedDict(SortedDict):
 
     Example usage:
 
-    >>> fsd = FuzzySortedDict({1.0: "foo"})
+    >>> fsd = FuzzySortedDict({1.0: 'foo'})
     >>> fsd[1.0]
-    "foo"
+    'foo'
     >>> fsd[0.0]
-    "foo"
+    'foo'
     >>> fsd[2.0]
-    "foo"
+    'foo'
     """
 
     ROUND_UP = 1
     ROUND_CLOSEST = 0
     ROUND_DOWN = -1
 
-    def __init__(self, *args, rounding=ROUND_CLOSEST, **kwargs):
+    def __init__(self, *args, **kwargs):
         """Initialize a fuzzy-sorted dict instance.
 
         Optional `rounding` argument dictates how
@@ -46,23 +46,23 @@ class FuzzySortedDict(SortedDict):
         :params args: positional arguments for :class:`SortedDict`.
         :params kwargs: keyword arguments for :class:`SortedDict`.
         """
-        self.rounding = rounding
+        self.rounding = kwargs.pop("rounding", self.ROUND_CLOSEST)
         super(FuzzySortedDict, self).__init__(*args, **kwargs)
 
     def nearest_key(self, request):
         """Return nearest-key to `request`, respecting `self.rounding`.
 
-        >>> fsd = FuzzySortedDict({1.0: "foo"})
+        >>> fsd = FuzzySortedDict({1.0: 'foo'})
         >>> fsd.nearest_key(0.0)
         1.0
         >>> fsd.nearest_key(2.0)
         1.0
 
-        >>> fsd = FuzzySortedDict({1.0: "foo"}, rounding=FuzzySortedDict.ROUND_DOWN)
+        >>> fsd = FuzzySortedDict({1.0: 'foo'}, rounding=FuzzySortedDict.ROUND_DOWN)
         >>> fsd.nearest_key(0.0)
         Traceback (most recent call last):
           ...
-        KeyError: No key below 0.0 found
+        KeyError: 'No key below 0.0 found'
         >>> fsd.nearest_key(2.0)
         1.0
 
@@ -78,11 +78,11 @@ class FuzzySortedDict(SortedDict):
         index = self.bisect_left(request)
         if index >= len(key_list):
             if self.rounding == self.ROUND_UP:
-                raise KeyError(f"No key above {repr(request)} found")
+                raise KeyError("No key above {} found".format(repr(request)))
             return key_list[index - 1]
         elif index == 0 and self.rounding == self.ROUND_DOWN:
             if self.rounding == self.ROUND_DOWN:
-                raise KeyError(f"No key below {repr(request)} found")
+                raise KeyError("No key below {} found".format(repr(request)))
             return key_list[index]
         elif key_list[index] == request:
             return key_list[index]
@@ -103,19 +103,19 @@ class FuzzySortedDict(SortedDict):
         :return: item corresponding to key nearest `request`
         :raises KeyError: if no appropriate item can be found
 
-        >>> fsd = FuzzySortedDict({1.0: "foo"})
-        >>> fsd.[0.0]
-        "foo"
-        >>> fsd.[2.0]
-        "foo"
-
-        >>> fsd = FuzzySortedDict({1.0: "foo"}, rounding=FuzzySortedDict.ROUND_UP)
+        >>> fsd = FuzzySortedDict({1.0: 'foo'})
         >>> fsd[0.0]
-        "foo"
+        'foo'
+        >>> fsd[2.0]
+        'foo'
+
+        >>> fsd = FuzzySortedDict({1.0: 'foo'}, rounding=FuzzySortedDict.ROUND_UP)
+        >>> fsd[0.0]
+        'foo'
         >>> fsd[2.0]
         Traceback (most recent call last):
           ...
-        KeyError: No key above 2.0 found
+        KeyError: 'No key above 2.0 found'
         """
         key = self.nearest_key(request)
         return super(FuzzySortedDict, self).__getitem__(key)
