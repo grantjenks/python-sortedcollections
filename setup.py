@@ -18,7 +18,7 @@ with open('README.rst') as reader:
 
 setup(
     name='sortedcollections',
-    version='1.1.2',
+    version='1.2.1',
     description='Python Sorted Collections',
     long_description=readme,
     author='Grant Jenks',
