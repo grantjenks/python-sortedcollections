@@ -82,21 +82,21 @@ class NearestDict(SortedDict):
 
         index = self.bisect_left(request)
 
+        if index >= len(key_list):
+            if self.rounding == self.NEAREST_NEXT:
+                raise KeyError("No key above {} found".format(repr(request)))
+            return key_list[index - 1]
         if key_list[index] == request:
             return key_list[index]
-
-        if index >= len(key_list) and self.rounding == self.NEAREST_NEXT:
-            raise KeyError("No key above {} found".format(repr(request)))
         if index == 0 and self.rounding == self.NEAREST_PREV:
             raise KeyError("No key below {} found".format(repr(request)))
-
-        if self.rounding == self.NEAREST_PREV or index >= len(key_list):
+        if self.rounding == self.NEAREST_PREV:
             return key_list[index - 1]
-        if self.rounding == self.NEAREST_NEXT or index == 0:
+        if self.rounding == self.NEAREST_NEXT:
             return key_list[index]
-        # Round nearest
-        pick_next = abs(key_list[index] - request) < abs(key_list[index - 1] - request)
-        return key_list[index] if pick_next else key_list[index - 1]
+        if abs(key_list[index - 1] - request) < abs(key_list[index] - request):
+            return key_list[index - 1]
+        return key_list[index]
 
     def __getitem__(self, request):
         """Return item corresponding to :meth:`.nearest_key`.
