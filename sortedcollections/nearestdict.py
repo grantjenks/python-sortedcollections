@@ -1,3 +1,9 @@
+"""NearestDict implementation.
+
+One primary use case for this data structure is storing data by a
+`datetime.datetime` or `float` key.
+"""
+
 from sortedcontainers import SortedDict
 
 
@@ -75,25 +81,21 @@ class NearestDict(SortedDict):
             raise KeyError("NearestDict is empty")
 
         index = self.bisect_left(request)
-        if index >= len(key_list):
-            if self.rounding == self.NEAREST_NEXT:
-                raise KeyError("No key above {} found".format(repr(request)))
+
+        if index >= len(key_list) and self.rounding == self.NEAREST_NEXT:
+            raise KeyError("No key above {} found".format(repr(request)))
+        if index == 0 and self.rounding == self.NEAREST_PREV:
+            raise KeyError("No key below {} found".format(repr(request)))
+
+        if self.rounding == self.NEAREST_PREV or index >= len(key_list):
             return key_list[index - 1]
-        elif index == 0 and self.rounding == self.NEAREST_PREV:
-            if self.rounding == self.NEAREST_PREV:
-                raise KeyError("No key below {} found".format(repr(request)))
+        if self.rounding == self.NEAREST_NEXT or index == 0:
             return key_list[index]
-        elif key_list[index] == request:
+        # Round nearest
+        if abs(key_list[index] - request) < abs(key_list[index - 1] - request):
             return key_list[index]
-        elif self.rounding == self.NEAREST_NEXT:
-            return key_list[index]
-        elif self.rounding == self.NEAREST_PREV:
-            return key_list[index - 1]
         else:
-            if abs(key_list[index] - request) < abs(key_list[index - 1] - request):
-                return key_list[index]
-            else:
-                return key_list[index - 1]
+            return key_list[index - 1]
 
     def __getitem__(self, request):
         """Return item corresponding to :meth:`.nearest_key`.
