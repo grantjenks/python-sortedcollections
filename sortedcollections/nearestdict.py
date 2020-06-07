@@ -25,12 +25,12 @@ class NearestDict(SortedDict):
 
     Example usage:
 
-    >>> fsd = NearestDict({1.0: 'foo'})
-    >>> fsd[1.0]
+    >>> d = NearestDict({1.0: 'foo'})
+    >>> d[1.0]
     'foo'
-    >>> fsd[0.0]
+    >>> d[0.0]
     'foo'
-    >>> fsd[2.0]
+    >>> d[2.0]
     'foo'
     """
 
@@ -57,18 +57,18 @@ class NearestDict(SortedDict):
     def nearest_key(self, request):
         """Return nearest-key to `request`, respecting `self.rounding`.
 
-        >>> fsd = NearestDict({1.0: 'foo'})
-        >>> fsd.nearest_key(0.0)
+        >>> d = NearestDict({1.0: 'foo'})
+        >>> d.nearest_key(0.0)
         1.0
-        >>> fsd.nearest_key(2.0)
+        >>> d.nearest_key(2.0)
         1.0
 
-        >>> fsd = NearestDict({1.0: 'foo'}, rounding=NearestDict.NEAREST_PREV)
-        >>> fsd.nearest_key(0.0)
+        >>> d = NearestDict({1.0: 'foo'}, rounding=NearestDict.NEAREST_PREV)
+        >>> d.nearest_key(0.0)
         Traceback (most recent call last):
           ...
         KeyError: 'No key below 0.0 found'
-        >>> fsd.nearest_key(2.0)
+        >>> d.nearest_key(2.0)
         1.0
 
         :param request: nearest-key lookup value
@@ -82,6 +82,9 @@ class NearestDict(SortedDict):
 
         index = self.bisect_left(request)
 
+        if key_list[index] == request:
+            return key_list[index]
+
         if index >= len(key_list) and self.rounding == self.NEAREST_NEXT:
             raise KeyError("No key above {} found".format(repr(request)))
         if index == 0 and self.rounding == self.NEAREST_PREV:
@@ -92,10 +95,8 @@ class NearestDict(SortedDict):
         if self.rounding == self.NEAREST_NEXT or index == 0:
             return key_list[index]
         # Round nearest
-        if abs(key_list[index] - request) < abs(key_list[index - 1] - request):
-            return key_list[index]
-        else:
-            return key_list[index - 1]
+        pick_next = abs(key_list[index] - request) < abs(key_list[index - 1] - request)
+        return key_list[index] if pick_next else key_list[index - 1]
 
     def __getitem__(self, request):
         """Return item corresponding to :meth:`.nearest_key`.
@@ -104,16 +105,16 @@ class NearestDict(SortedDict):
         :return: item corresponding to key nearest `request`
         :raises KeyError: if no appropriate item can be found
 
-        >>> fsd = NearestDict({1.0: 'foo'})
-        >>> fsd[0.0]
+        >>> d = NearestDict({1.0: 'foo'})
+        >>> d[0.0]
         'foo'
-        >>> fsd[2.0]
+        >>> d[2.0]
         'foo'
 
-        >>> fsd = NearestDict({1.0: 'foo'}, rounding=NearestDict.NEAREST_NEXT)
-        >>> fsd[0.0]
+        >>> d = NearestDict({1.0: 'foo'}, rounding=NearestDict.NEAREST_NEXT)
+        >>> d[0.0]
         'foo'
-        >>> fsd[2.0]
+        >>> d[2.0]
         Traceback (most recent call last):
           ...
         KeyError: 'No key above 2.0 found'

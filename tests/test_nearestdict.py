@@ -4,15 +4,15 @@ from sortedcollections import NearestDict
 
 
 def test_basic():
-    fsd = NearestDict()
+    d = NearestDict()
 
     with pytest.raises(KeyError):
-        fsd[0]
+        d[0]
 
-    fsd[0] = "a"
-    assert fsd[0] == "a"
-    fsd[0] = "b"
-    assert fsd[0] == "b"
+    d[0] = "a"
+    assert d[0] == "a"
+    d[0] = "b"
+    assert d[0] == "b"
 
 
 def test_iteration():
@@ -23,44 +23,50 @@ def test_iteration():
         (2, "c"),
     )
 
-    fsd = NearestDict()
+    d = NearestDict()
     for k, v in exp_items:
-        fsd[k] = v
+        d[k] = v
 
-    for act, exp in zip(fsd.items(), exp_items):
+    for act, exp in zip(d.items(), exp_items):
         assert act == exp
 
 
 def test_nearest():
-    fsd = NearestDict(rounding=NearestDict.NEAREST)
+    d = NearestDict(rounding=NearestDict.NEAREST)
 
-    fsd[0] = "a"
-    fsd[3] = "b"
-    assert fsd[-1] == "a"
-    assert fsd[1] == "a"
-    assert fsd[2] == "b"
-    assert fsd[4] == "b"
+    d[0] = "a"
+    d[3] = "b"
+    assert d[-1] == "a"
+    assert d[0] == "a"
+    assert d[1] == "a"
+    assert d[2] == "b"
+    assert d[3] == "b"
+    assert d[4] == "b"
 
 
 def test_nearest_prev():
-    fsd = NearestDict(rounding=NearestDict.NEAREST_PREV)
+    d = NearestDict(rounding=NearestDict.NEAREST_PREV)
 
-    fsd[0] = "a"
-    fsd[3] = "b"
+    d[0] = "a"
+    d[3] = "b"
     with pytest.raises(KeyError):
-        fsd[-1]
-    assert fsd[1] == "a"
-    assert fsd[2] == "a"
-    assert fsd[4] == "b"
+        d[-1]
+    assert d[0] == "a"
+    assert d[1] == "a"
+    assert d[2] == "a"
+    assert d[3] == "b"
+    assert d[4] == "b"
 
 
 def test_nearest_next():
-    fsd = NearestDict(rounding=NearestDict.NEAREST_NEXT)
+    d = NearestDict(rounding=NearestDict.NEAREST_NEXT)
 
-    fsd[0] = "a"
-    fsd[3] = "b"
-    assert fsd[-1] == "a"
-    assert fsd[1] == "b"
-    assert fsd[2] == "b"
+    d[0] = "a"
+    d[3] = "b"
+    assert d[-1] == "a"
+    assert d[0] == "a"
+    assert d[1] == "b"
+    assert d[2] == "b"
+    assert d[3] == "b"
     with pytest.raises(KeyError):
-        fsd[4]
+        d[4]
