@@ -86,14 +86,14 @@ class ItemSortedDict(SortedDict):
         if key not in self:
             raise KeyError(key)
         self._list_remove(key)
-        self._dict_delitem(key)
+        dict.__delitem__(self, key)
 
     def __setitem__(self, key, value):
         "``mapping[key] = value``"
         if key in self:
             self._list_remove(key)
-            self._dict_delitem(key)
-        self._dict_setitem(key, value)
+            dict.__delitem__(self, key)
+        dict.__setitem__(self, key, value)
         self._list_add(key)
 
     _setitem = __setitem__
@@ -158,14 +158,14 @@ class ValueSortedDict(SortedDict):
         if key not in self:
             raise KeyError(key)
         self._list_remove(key)
-        self._dict_delitem(key)
+        dict.__delitem__(self, key)
 
     def __setitem__(self, key, value):
         "``mapping[key] = value``"
         if key in self:
             self._list_remove(key)
-            self._dict_delitem(key)
-        self._dict_setitem(key, value)
+            dict.__delitem__(self, key)
+        dict.__setitem__(self, key, value)
         self._list_add(key)
 
     _setitem = __setitem__
