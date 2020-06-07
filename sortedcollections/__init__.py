@@ -15,7 +15,7 @@ from .recipes import IndexableDict, IndexableSet
 from .recipes import ItemSortedDict, ValueSortedDict
 from .recipes import OrderedSet, SegmentList
 from .ordereddict import OrderedDict
-from .fuzzysorteddict import FuzzySortedDict
+from .nearestdict import NearestDict
 
 __title__ = 'sortedcollections'
 __version__ = '1.2.1'

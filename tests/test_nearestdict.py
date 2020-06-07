@@ -1,10 +1,10 @@
 import pytest
 
-from sortedcollections import FuzzySortedDict
+from sortedcollections import NearestDict
 
 
 def test_basic():
-    fsd = FuzzySortedDict()
+    fsd = NearestDict()
 
     with pytest.raises(KeyError):
         fsd[0]
@@ -23,7 +23,7 @@ def test_iteration():
         (2, "c"),
     )
 
-    fsd = FuzzySortedDict()
+    fsd = NearestDict()
     for k, v in exp_items:
         fsd[k] = v
 
@@ -31,8 +31,8 @@ def test_iteration():
         assert act == exp
 
 
-def test_round_closest():
-    fsd = FuzzySortedDict(rounding=FuzzySortedDict.ROUND_CLOSEST)
+def test_nearest():
+    fsd = NearestDict(rounding=NearestDict.NEAREST)
 
     fsd[0] = "a"
     fsd[3] = "b"
@@ -42,8 +42,8 @@ def test_round_closest():
     assert fsd[4] == "b"
 
 
-def test_round_down():
-    fsd = FuzzySortedDict(rounding=FuzzySortedDict.ROUND_DOWN)
+def test_nearest_prev():
+    fsd = NearestDict(rounding=NearestDict.NEAREST_PREV)
 
     fsd[0] = "a"
     fsd[3] = "b"
@@ -54,8 +54,8 @@ def test_round_down():
     assert fsd[4] == "b"
 
 
-def test_round_up():
-    fsd = FuzzySortedDict(rounding=FuzzySortedDict.ROUND_UP)
+def test_nearest_next():
+    fsd = NearestDict(rounding=NearestDict.NEAREST_NEXT)
 
     fsd[0] = "a"
     fsd[3] = "b"
