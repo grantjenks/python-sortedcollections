@@ -18,7 +18,7 @@ Features
 - SegmentList - List with fast random access insertion and deletion.
 - 100% code coverage testing.
 - Developed on Python 3.7
-- Tested on CPython 2.7, 3.4, 3.5, 3.6, 3.7 and PyPy, PyPy3
+- Tested on CPython 2.7, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, and PyPy, PyPy3
 
 .. image:: https://api.travis-ci.org/grantjenks/python-sortedcollections.svg?branch=master
     :target: http://www.grantjenks.com/docs/sortedcollections/
