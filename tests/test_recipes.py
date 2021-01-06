@@ -1,6 +1,6 @@
 "Test sortedcollections.recipes"
 
-import pytest
+import pickle, pytest
 from sortedcollections import IndexableDict, IndexableSet, SegmentList
 
 
@@ -14,6 +14,12 @@ def test_index_set():
     set_values = IndexableSet(range(10))
     for index in range(10):
         assert set_values[index] == index
+
+def test_index_set_pickle():
+    set_values1 = IndexableSet(range(10))
+    data = pickle.dumps(set_values1)
+    set_values2 = pickle.loads(data)
+    assert set_values1 == set_values2
 
 def test_segment_list():
     values = [5, 1, 3, 2, 4, 8, 6, 7, 9, 0]
