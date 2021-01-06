@@ -18,8 +18,8 @@ from .ordereddict import OrderedDict
 from .nearestdict import NearestDict
 
 __title__ = 'sortedcollections'
-__version__ = '1.2.1'
-__build__ = 0x010201
+__version__ = '1.2.2'
+__build__ = 0x010202
 __author__ = 'Grant Jenks'
 __license__ = 'Apache 2.0'
 __copyright__ = 'Copyright 2015-2018 Grant Jenks'
