@@ -54,6 +54,9 @@ class IndexableSet(SortedSet):
     def __init__(self, *args, **kwargs):
         super(IndexableSet, self).__init__(*args, key=hash, **kwargs)
 
+    def __reduce__(self):
+        return self.__class__, (set(self),)
+
 
 class ItemSortedDict(SortedDict):
     """Sorted dictionary with key-function support for item pairs.
