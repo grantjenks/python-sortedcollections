@@ -21,8 +21,8 @@ import sortedcollections
 # -- Project information -----------------------------------------------------
 
 project = 'Sorted Collections'
-copyright = sortedcollections.__copyright__
-author = sortedcollections.__author__
+copyright = 'Apache 2.0'
+author = 'Grant Jenks'
 
 # The short X.Y version
 version = sortedcollections.__version__

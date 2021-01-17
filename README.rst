@@ -37,7 +37,7 @@ function:
 .. code-block:: python
 
     >>> from sortedcollections import ValueSortedDict
-    >>> help(ValueSortedDict)
+    >>> help(ValueSortedDict)  # doctest: +SKIP
 
 .. _`Sorted Collections`: http://www.grantjenks.com/docs/sortedcollections/
 
