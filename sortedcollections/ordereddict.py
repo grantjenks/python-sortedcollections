@@ -10,25 +10,12 @@ from sortedcontainers.sortedlist import recursive_repr
 
 from .recipes import abc
 
-###############################################################################
-# BEGIN Python 2/3 Shims
-###############################################################################
-
-from sys import hexversion  # pylint: disable=wrong-import-order
-
-if hexversion < 0x03000000:
-    from itertools import imap as map  # pylint: disable=no-name-in-module,redefined-builtin,ungrouped-imports
-
-###############################################################################
-# END Python 2/3 Shims
-###############################################################################
-
 NONE = object()
 
 
 class KeysView(abc.KeysView, abc.Sequence):
     "Read-only view of mapping keys."
-    # pylint: disable=too-few-public-methods,protected-access,too-many-ancestors
+    # noqa pylint: disable=too-few-public-methods,protected-access,too-many-ancestors
     def __getitem__(self, index):
         "``keys_view[index]``"
         _nums = self._mapping._nums
@@ -40,7 +27,7 @@ class KeysView(abc.KeysView, abc.Sequence):
 
 class ItemsView(abc.ItemsView, abc.Sequence):
     "Read-only view of mapping items."
-    # pylint: disable=too-few-public-methods,protected-access,too-many-ancestors
+    # noqa pylint: disable=too-few-public-methods,protected-access,too-many-ancestors
     def __getitem__(self, index):
         "``items_view[index]``"
         _mapping = self._mapping
@@ -56,7 +43,7 @@ class ItemsView(abc.ItemsView, abc.Sequence):
 
 class ValuesView(abc.ValuesView, abc.Sequence):
     "Read-only view of mapping values."
-    # pylint: disable=too-few-public-methods,protected-access,too-many-ancestors
+    # noqa pylint: disable=too-few-public-methods,protected-access,too-many-ancestors
     def __getitem__(self, index):
         "``items_view[index]``"
         _mapping = self._mapping
@@ -85,6 +72,7 @@ class OrderedDict(dict):
     The dict views support the sequence abstract base class.
 
     """
+
     # pylint: disable=super-init-not-called
     def __init__(self, *args, **kwargs):
         self._keys = {}

@@ -2,23 +2,12 @@
 
 """
 
+from collections import abc
 from copy import deepcopy
 from itertools import count
-from sortedcontainers import SortedKeyList, SortedDict, SortedSet
+
+from sortedcontainers import SortedDict, SortedKeyList, SortedSet
 from sortedcontainers.sortedlist import recursive_repr
-
-###############################################################################
-# BEGIN Python 2/3 Shims
-###############################################################################
-
-try:
-    from collections import abc
-except ImportError:
-    import collections as abc
-
-###############################################################################
-# END Python 2/3 Shims
-###############################################################################
 
 
 class IndexableDict(SortedDict):
@@ -34,6 +23,7 @@ class IndexableDict(SortedDict):
     The dict views support the sequence abstract base class.
 
     """
+
     def __init__(self, *args, **kwargs):
         super(IndexableDict, self).__init__(hash, *args, **kwargs)
 
@@ -50,6 +40,7 @@ class IndexableSet(SortedSet):
     `IndexableSet` implements the sequence abstract base class.
 
     """
+
     # pylint: disable=too-many-ancestors
     def __init__(self, *args, **kwargs):
         super(IndexableSet, self).__init__(*args, key=hash, **kwargs)
@@ -74,13 +65,16 @@ class ItemSortedDict(SortedDict):
     the callable given as the first argument.
 
     """
+
     def __init__(self, *args, **kwargs):
         assert args and callable(args[0])
         args = list(args)
         func = self._func = args[0]
+
         def key_func(key):
             "Apply key function to (key, value) item pair."
             return func(key, self[key])
+
         args[0] = key_func
         super(ItemSortedDict, self).__init__(*args, **kwargs)
 
@@ -137,19 +131,24 @@ class ValueSortedDict(SortedDict):
     ``sorted`` function.
 
     """
+
     def __init__(self, *args, **kwargs):
         args = list(args)
         if args and callable(args[0]):
             func = self._func = args[0]
+
             def key_func(key):
                 "Apply key function to ``mapping[value]``."
                 return func(self[key])
+
             args[0] = key_func
         else:
             self._func = None
+
             def key_func(key):
                 "Return mapping value for key."
                 return self[key]
+
             if args and args[0] is None:
                 args[0] = key_func
             else:
@@ -187,13 +186,10 @@ class ValueSortedDict(SortedDict):
     @recursive_repr()
     def __repr__(self):
         temp = '{0}({1}, {{{2}}})'
-        items = ', '.join('{0}: {1}'.format(repr(key), repr(self[key]))
-                          for key in self._list)
-        return temp.format(
-            self.__class__.__name__,
-            repr(self._func),
-            items
+        items = ', '.join(
+            '{0}: {1}'.format(repr(key), repr(self[key])) for key in self._list
         )
+        return temp.format(self.__class__.__name__, repr(self._func), items)
 
 
 class OrderedSet(abc.MutableSet, abc.Sequence):
@@ -211,6 +207,7 @@ class OrderedSet(abc.MutableSet, abc.Sequence):
     OrderedSet also implements the collections.Sequence interface.
 
     """
+
     # pylint: disable=too-many-ancestors
     def __init__(self, iterable=()):
         # pylint: disable=super-init-not-called
@@ -281,6 +278,7 @@ class SegmentList(SortedKeyList):
     implemented for SegmentList.
 
     """
+
     # pylint: disable=too-many-ancestors
     def __init__(self, iterable=()):
         super(SegmentList, self).__init__(iterable, self.zero)

@@ -1,11 +1,12 @@
+-e .
+blue
 coverage
 doc8
-gj
+mypy
 pylint
 pytest
 pytest-cov
 rstcheck
-sortedcontainers
 sphinx
 tox
 twine
