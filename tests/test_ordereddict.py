@@ -1,10 +1,13 @@
 "Test sortedcollections.OrderedDict"
 
 import pickle
+
 import pytest
+
 from sortedcollections import OrderedDict
 
 pairs = dict(enumerate(range(10)))
+
 
 def test_init():
     od = OrderedDict()
@@ -20,13 +23,17 @@ def test_init():
     assert len(od) == 10
     od._check()
 
+
 def test_setitem():
     od = OrderedDict()
     od['alice'] = 0
     od['bob'] = 1
     od['carol'] = 2
     assert len(od) == 3
+    od['carol'] = 2
+    assert len(od) == 3
     od._check()
+
 
 def test_delitem():
     od = OrderedDict(pairs)
@@ -36,11 +43,13 @@ def test_delitem():
     assert len(od) == 0
     od._check()
 
+
 def test_iter_reversed():
     od = OrderedDict([('b', 0), ('a', 1), ('c', 2)])
     assert list(od) == ['b', 'a', 'c']
     assert list(reversed(od)) == ['c', 'a', 'b']
     od._check()
+
 
 def test_clear():
     od = OrderedDict(pairs)
@@ -48,6 +57,7 @@ def test_clear():
     od.clear()
     assert len(od) == 0
     od._check()
+
 
 def test_popitem():
     od = OrderedDict(enumerate(range(10)))
@@ -62,11 +72,13 @@ def test_popitem():
         assert num == key == value
         od._check()
 
+
 def test_keys():
     od = OrderedDict(enumerate(range(10)))
     assert list(reversed(od.keys())) == list(reversed(range(10)))
     assert od.keys()[:3] == [0, 1, 2]
     od._check()
+
 
 def test_items():
     items = list(enumerate(range(10)))
@@ -75,11 +87,13 @@ def test_items():
     assert od.items()[:3] == [(0, 0), (1, 1), (2, 2)]
     od._check()
 
+
 def test_values():
     od = OrderedDict(enumerate(range(10)))
     assert list(reversed(od.values())) == list(reversed(range(10)))
     assert od.values()[:3] == [0, 1, 2]
     od._check()
+
 
 def test_iloc():
     od = OrderedDict(enumerate(range(10)))
@@ -90,6 +104,7 @@ def test_iloc():
     assert len(iloc) == 10
     od._check()
 
+
 def test_pop():
     od = OrderedDict(enumerate(range(10)))
     for num in range(10):
@@ -99,26 +114,30 @@ def test_pop():
     assert od.pop(1, default='thing') == 'thing'
     od._check()
 
+
 def test_pop_error():
     od = OrderedDict()
     with pytest.raises(KeyError):
         od.pop(0)
 
+
 def test_setdefault():
     od = OrderedDict()
     od.setdefault(0, False)
-    assert od[0] == False
+    assert od[0] is False
     od.setdefault(1, default=True)
-    assert od[1] == True
+    assert od[1] is True
     od.setdefault(2)
-    assert od[2] == None
-    assert od.setdefault(0) == False
-    assert od.setdefault(1) == True
+    assert od[2] is None
+    assert od.setdefault(0) is False
+    assert od.setdefault(1) is True
+
 
 def test_repr():
     od = OrderedDict()
     assert repr(od) == 'OrderedDict([])'
     assert str(od) == 'OrderedDict([])'
+
 
 def test_reduce():
     od = OrderedDict(enumerate(range(10)))
@@ -126,15 +145,18 @@ def test_reduce():
     copy = pickle.loads(data)
     assert od == copy
 
+
 def test_copy():
     od = OrderedDict(enumerate(range(10)))
     copy = od.copy()
     assert od == copy
 
+
 def test_fromkeys():
     od = OrderedDict.fromkeys('abc')
     assert od == {'a': None, 'b': None, 'c': None}
     od._check()
+
 
 def test_equality():
     od = OrderedDict.fromkeys('abc')

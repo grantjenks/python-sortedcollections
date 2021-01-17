@@ -17,14 +17,11 @@ Features
 - IndexableSet - Set with numeric indexing support.
 - SegmentList - List with fast random access insertion and deletion.
 - 100% code coverage testing.
-- Developed on Python 3.7
-- Tested on CPython 2.7, 3.4, 3.5, 3.6, 3.7 and PyPy, PyPy3
+- Developed on Python 3.9
+- Tested on CPython 3.6, 3.7, 3.8, and 3.9
 
-.. image:: https://api.travis-ci.org/grantjenks/python-sortedcollections.svg?branch=master
-    :target: http://www.grantjenks.com/docs/sortedcollections/
-
-.. image:: https://ci.appveyor.com/api/projects/status/github/grantjenks/python-sortedcollections?branch=master&svg=true
-   :target: http://www.grantjenks.com/docs/sortedcollections/
+.. image:: https://github.com/grantjenks/python-sortedcollections/workflows/integration/badge.svg
+   :target: https://github.com/grantjenks/python-sortedcollections/actions?query=workflow%3Aintegration
 
 Quickstart
 ----------
@@ -79,7 +76,7 @@ Reference and Indices
 Sorted Collections License
 --------------------------
 
-Copyright 2015-2019 Grant Jenks
+Copyright 2015-2021 Grant Jenks
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
