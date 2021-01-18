@@ -185,11 +185,8 @@ class ValueSortedDict(SortedDict):
 
     @recursive_repr()
     def __repr__(self):
-        temp = '{0}({1}, {{{2}}})'
-        items = ', '.join(
-            '{0}: {1}'.format(repr(key), repr(self[key])) for key in self._list
-        )
-        return temp.format(self.__class__.__name__, repr(self._func), items)
+        items = ', '.join(f'{key!r}: {self[key]!r}' for key in self._list)
+        return f'{self.__class__.__name__}({self._func!r}, {{{items}}})'
 
 
 class OrderedSet(abc.MutableSet, abc.Sequence):
@@ -248,7 +245,7 @@ class OrderedSet(abc.MutableSet, abc.Sequence):
         try:
             return self._keys[value]
         except KeyError:
-            raise ValueError('%r is not in %s' % (value, type(self).__name__))
+            raise ValueError(f'{value!r} is not in {type(self).__name__}')
 
     def add(self, value):
         "Add element, value, to set."
@@ -265,7 +262,7 @@ class OrderedSet(abc.MutableSet, abc.Sequence):
 
     def __repr__(self):
         "Text representation of set."
-        return '%s(%r)' % (type(self).__name__, list(self))
+        return f'{type(self).__name__}({list(self)!r})'
 
     __str__ = __repr__
 

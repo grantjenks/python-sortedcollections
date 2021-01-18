@@ -166,7 +166,7 @@ class OrderedDict(dict):
     @recursive_repr()
     def __repr__(self):
         "Text representation of mapping."
-        return '%s(%r)' % (self.__class__.__name__, list(self.items()))
+        return f'{self.__class__.__name__}({list(self.items())!r})'
 
     __str__ = __repr__
 
