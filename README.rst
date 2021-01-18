@@ -23,6 +23,9 @@ Features
 .. image:: https://github.com/grantjenks/python-sortedcollections/workflows/integration/badge.svg
    :target: https://github.com/grantjenks/python-sortedcollections/actions?query=workflow%3Aintegration
 
+.. image:: https://github.com/grantjenks/python-sortedcollections/workflows/release/badge.svg
+   :target: https://github.com/grantjenks/python-sortedcollections/actions?query=workflow%3Arelease
+
 Quickstart
 ----------
 
