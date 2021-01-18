@@ -25,7 +25,7 @@ class IndexableDict(SortedDict):
     """
 
     def __init__(self, *args, **kwargs):
-        super(IndexableDict, self).__init__(hash, *args, **kwargs)
+        super().__init__(hash, *args, **kwargs)
 
 
 class IndexableSet(SortedSet):
@@ -43,7 +43,7 @@ class IndexableSet(SortedSet):
 
     # pylint: disable=too-many-ancestors
     def __init__(self, *args, **kwargs):
-        super(IndexableSet, self).__init__(*args, key=hash, **kwargs)
+        super().__init__(*args, key=hash, **kwargs)
 
     def __reduce__(self):
         return self.__class__, (set(self),)
@@ -76,7 +76,7 @@ class ItemSortedDict(SortedDict):
             return func(key, self[key])
 
         args[0] = key_func
-        super(ItemSortedDict, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def __delitem__(self, key):
         "``del mapping[key]``"
@@ -153,7 +153,7 @@ class ValueSortedDict(SortedDict):
                 args[0] = key_func
             else:
                 args.insert(0, key_func)
-        super(ValueSortedDict, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def __delitem__(self, key):
         "``del mapping[key]``"
@@ -281,7 +281,7 @@ class SegmentList(SortedKeyList):
 
     # pylint: disable=too-many-ancestors
     def __init__(self, iterable=()):
-        super(SegmentList, self).__init__(iterable, self.zero)
+        super().__init__(iterable, self.zero)
 
     @staticmethod
     def zero(_):

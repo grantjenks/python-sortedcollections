@@ -78,7 +78,7 @@ def test_pickle():
     assert original == duplicate
 
 
-class Negater(object):
+class Negater:
     def __call__(self, value):
         return -value
 

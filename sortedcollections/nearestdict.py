@@ -52,7 +52,7 @@ class NearestDict(SortedDict):
         :params kwargs: keyword arguments for :class:`SortedDict`.
         """
         self.rounding = kwargs.pop('rounding', self.NEAREST)
-        super(NearestDict, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def nearest_key(self, request):
         """Return nearest-key to `request`, respecting `self.rounding`.
@@ -120,4 +120,4 @@ class NearestDict(SortedDict):
         KeyError: 'No key above 2.0 found'
         """
         key = self.nearest_key(request)
-        return super(NearestDict, self).__getitem__(key)
+        return super().__getitem__(key)
