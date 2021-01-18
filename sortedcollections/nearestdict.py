@@ -84,12 +84,12 @@ class NearestDict(SortedDict):
 
         if index >= len(key_list):
             if self.rounding == self.NEAREST_NEXT:
-                raise KeyError('No key above {} found'.format(repr(request)))
+                raise KeyError(f'No key above {request!r} found')
             return key_list[index - 1]
         if key_list[index] == request:
             return key_list[index]
         if index == 0 and self.rounding == self.NEAREST_PREV:
-            raise KeyError('No key below {} found'.format(repr(request)))
+            raise KeyError(f'No key below {request!r} found')
         if self.rounding == self.NEAREST_PREV:
             return key_list[index - 1]
         if self.rounding == self.NEAREST_NEXT:
