@@ -11,6 +11,7 @@ Features
   <http://www.grantjenks.com/docs/sortedcontainers/>`_ module.
 - ValueSortedDict - Dictionary with (key, value) item pairs sorted by value.
 - ItemSortedDict - Dictionary with key-function support for item pairs.
+- NearestDict - Dictionary with nearest-key lookup.
 - OrderedDict - Ordered dictionary with numeric indexing support.
 - OrderedSet - Ordered set with numeric indexing support.
 - IndexableDict - Dictionary with numeric indexing support.
@@ -49,6 +50,7 @@ Recipes
 
 - `Value Sorted Dictionary Recipe`_
 - `Item Sorted Dictionary Recipe`_
+- `Nearest Dictionary Recipe`_
 - `Ordered Dictionary Recipe`_
 - `Ordered Set Recipe`_
 - `Indexable Dictionary Recipe`_
@@ -57,6 +59,7 @@ Recipes
 
 .. _`Value Sorted Dictionary Recipe`: http://www.grantjenks.com/docs/sortedcollections/valuesorteddict.html
 .. _`Item Sorted Dictionary Recipe`: http://www.grantjenks.com/docs/sortedcollections/itemsorteddict.html
+.. _`Nearest Dictionary Recipe`: http://www.grantjenks.com/docs/sortedcollections/nearestdict.html
 .. _`Ordered Dictionary Recipe`: http://www.grantjenks.com/docs/sortedcollections/ordereddict.html
 .. _`Ordered Set Recipe`: http://www.grantjenks.com/docs/sortedcollections/orderedset.html
 .. _`Indexable Dictionary Recipe`: http://www.grantjenks.com/docs/sortedcollections/indexabledict.html

@@ -5,6 +5,7 @@
 
    valuesorteddict
    itemsorteddict
+   nearestdict
    ordereddict
    orderedset
    indexabledict
