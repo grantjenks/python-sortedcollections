@@ -51,7 +51,7 @@ class NearestDict(SortedDict):
         :params args: positional arguments for :class:`SortedDict`.
         :params kwargs: keyword arguments for :class:`SortedDict`.
         """
-        self.rounding = kwargs.pop("rounding", self.NEAREST)
+        self.rounding = kwargs.pop('rounding', self.NEAREST)
         super(NearestDict, self).__init__(*args, **kwargs)
 
     def nearest_key(self, request):
@@ -78,18 +78,18 @@ class NearestDict(SortedDict):
         key_list = self.keys()
 
         if not key_list:
-            raise KeyError("NearestDict is empty")
+            raise KeyError('NearestDict is empty')
 
         index = self.bisect_left(request)
 
         if index >= len(key_list):
             if self.rounding == self.NEAREST_NEXT:
-                raise KeyError("No key above {} found".format(repr(request)))
+                raise KeyError('No key above {} found'.format(repr(request)))
             return key_list[index - 1]
         if key_list[index] == request:
             return key_list[index]
         if index == 0 and self.rounding == self.NEAREST_PREV:
-            raise KeyError("No key below {} found".format(repr(request)))
+            raise KeyError('No key below {} found'.format(repr(request)))
         if self.rounding == self.NEAREST_PREV:
             return key_list[index - 1]
         if self.rounding == self.NEAREST_NEXT:
