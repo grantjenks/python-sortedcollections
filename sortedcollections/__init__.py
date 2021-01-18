@@ -19,6 +19,7 @@ from sortedcontainers import (
     SortedSet,
 )
 
+from .nearestdict import NearestDict
 from .ordereddict import OrderedDict
 from .recipes import (
     IndexableDict,
@@ -33,6 +34,7 @@ __all__ = [
     'IndexableDict',
     'IndexableSet',
     'ItemSortedDict',
+    'NearestDict',
     'OrderedDict',
     'OrderedSet',
     'SegmentList',
