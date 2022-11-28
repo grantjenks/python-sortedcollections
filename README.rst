@@ -19,7 +19,7 @@ Features
 - SegmentList - List with fast random access insertion and deletion.
 - 100% code coverage testing.
 - Developed on Python 3.9
-- Tested on CPython 3.6, 3.7, 3.8, and 3.9
+- Tested on CPython 3.6, 3.7, 3.8, 3.9, 3.10, and 3.11
 
 .. image:: https://github.com/grantjenks/python-sortedcollections/workflows/integration/badge.svg
    :target: https://github.com/grantjenks/python-sortedcollections/actions?query=workflow%3Aintegration
