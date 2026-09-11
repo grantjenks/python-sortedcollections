@@ -46,6 +46,9 @@ class IndexableSet(SortedSet):
         super().__init__(*args, key=hash, **kwargs)
 
     def __reduce__(self):
+        """Return the class and :meth:`IndexableSet.__init__` arguments for
+        pickling.
+        """
         return self.__class__, (set(self),)
 
 
@@ -179,6 +182,9 @@ class ValueSortedDict(SortedDict):
     __copy__ = copy
 
     def __reduce__(self):
+        """Return the class and :meth:`ValueSortedDict.__init__` arguments for
+        pickling.
+        """
         items = [(key, self[key]) for key in self._list]
         args = (self._func, items)
         return (self.__class__, args)

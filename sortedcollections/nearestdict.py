@@ -10,7 +10,7 @@ from sortedcontainers import SortedDict
 class NearestDict(SortedDict):
     """A dict using nearest-key lookup.
 
-    A :class:`SortedDict` subclass that uses nearest-key lookup instead of
+    A `SortedDict`_ subclass that uses nearest-key lookup instead of
     exact-key lookup. Optionally, you can specify a rounding mode to return the
     nearest key less than or equal to or greater than or equal to the provided
     key.
@@ -34,8 +34,11 @@ class NearestDict(SortedDict):
     'foo'
     """
 
+    #: Use the nearest key less than or equal to the requested key.
     NEAREST_PREV = -1
+    #: Use the key with the smallest distance from the requested key.
     NEAREST = 0
+    #: Use the nearest key greater than or equal to the requested key.
     NEAREST_NEXT = 1
 
     def __init__(self, *args, **kwargs):
@@ -48,8 +51,8 @@ class NearestDict(SortedDict):
         :attr:`NearestDict.NEAREST`)
 
         :params rounding: how to round on nearest-key lookup (optional)
-        :params args: positional arguments for :class:`SortedDict`.
-        :params kwargs: keyword arguments for :class:`SortedDict`.
+        :params args: positional arguments for `SortedDict`_.
+        :params kwargs: keyword arguments for `SortedDict`_.
         """
         self.rounding = kwargs.pop('rounding', self.NEAREST)
         super().__init__(*args, **kwargs)
