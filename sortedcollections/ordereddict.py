@@ -124,6 +124,11 @@ class OrderedDict(dict):
         value = self.pop(key)
         return key, value
 
+    def __ior__(self, other):
+        "Update this mapping in place, preserving insertion order."
+        self.update(other)
+        return self
+
     update = __update = abc.MutableMapping.update
 
     def keys(self):
