@@ -1,3 +1,6 @@
+import copy
+import pickle
+
 import pytest
 
 from sortedcollections import NearestDict
@@ -70,3 +73,25 @@ def test_nearest_next():
     assert d[3] == 'b'
     with pytest.raises(KeyError):
         d[4]
+
+
+@pytest.mark.parametrize(
+    'rounding', [NearestDict.NEAREST_PREV, NearestDict.NEAREST_NEXT]
+)
+@pytest.mark.parametrize(
+    'clone',
+    [
+        lambda obj: obj.copy(),
+        copy.deepcopy,
+        lambda obj: pickle.loads(pickle.dumps(obj)),
+    ],
+)
+def test_copy_preserves_rounding(rounding, clone):
+    original = NearestDict({0: 'low', 10: 'high'}, rounding=rounding)
+    copied = clone(original)
+    assert copied is not original
+    assert copied.rounding == rounding
+    assert copied[4] == original[4]
+    assert copied[6] == original[6]
+    copied[20] = 'new'
+    assert 20 not in original
