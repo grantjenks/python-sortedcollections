@@ -5,6 +5,7 @@
 from collections import abc
 from copy import deepcopy
 from itertools import count
+from operator import index as to_index
 
 from sortedcontainers import SortedDict, SortedKeyList, SortedSet
 from sortedcontainers.sortedlist import recursive_repr
@@ -308,7 +309,10 @@ class SegmentList(SortedKeyList):
             self.append(value)
 
     def insert(self, index, value):
-        if index == self._len:
+        index = to_index(index)
+        if index < 0:
+            index = max(0, self._len + index)
+        if index >= self._len:
             self.append(value)
             return
         pos, idx = self._pos(index)
