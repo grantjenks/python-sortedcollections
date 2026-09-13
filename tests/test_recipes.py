@@ -58,3 +58,34 @@ def test_segment_list_setitem_slice():
     sl = SegmentList()
     with pytest.raises(NotImplementedError):
         sl[:] = [0]
+
+
+@pytest.mark.parametrize('index', [-100, -4, -3, 3, 4, 100])
+def test_segmentlist_insert_clamps_index(index):
+    expected = [1, 2, 3]
+    values = SegmentList(expected)
+    expected.insert(index, 9)
+    values.insert(index, 9)
+    assert list(values) == expected
+    values._check()
+
+
+def test_segmentlist_insert_empty():
+    values = SegmentList()
+    values.insert(-1, 9)
+    assert list(values) == [9]
+    values._check()
+
+
+def test_segmentlist_insert_index_protocol():
+    class Index:
+        def __index__(self):
+            return 10
+
+    values = SegmentList([1])
+    values.insert(Index(), 2)
+    assert list(values) == [1, 2]
+    with pytest.raises(TypeError):
+        values.insert(10.5, 3)
+    assert list(values) == [1, 2]
+    values._check()
