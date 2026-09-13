@@ -54,6 +54,15 @@ class NearestDict(SortedDict):
         self.rounding = kwargs.pop('rounding', self.NEAREST)
         super().__init__(*args, **kwargs)
 
+    def copy(self):
+        "Return a shallow copy with the same rounding mode."
+        return self.__class__(self._key, self.items(), rounding=self.rounding)
+
+    def __reduce__(self):
+        "Preserve the rounding mode during copying and pickling."
+        constructor, args = super().__reduce__()
+        return constructor, args, {'rounding': self.rounding}
+
     def nearest_key(self, request):
         """Return nearest-key to `request`, respecting `self.rounding`.
 
