@@ -56,6 +56,37 @@ def test_index():
         assert values.index(value) == os.index(value)
 
 
+@pytest.mark.parametrize('removed', ['a', 'c', 'ace'])
+def test_index_after_discard(removed):
+    os = OrderedSet('abcde')
+    for value in removed:
+        os.discard(value)
+    expected = [value for value in 'abcde' if value not in removed]
+    for index, value in enumerate(expected):
+        assert os.index(value) == index
+        assert os[os.index(value)] == value
+    for value in removed:
+        with pytest.raises(ValueError):
+            os.index(value)
+
+
+def test_index_after_clear():
+    os = OrderedSet('abc')
+    os.clear()
+    os.add('d')
+    assert os.index('d') == 0
+    assert os[os.index('d')] == 'd'
+
+
+def test_index_after_reinsert():
+    os = OrderedSet('abc')
+    os.discard('b')
+    os.add('b')
+    for index, value in enumerate('acb'):
+        assert os.index(value) == index
+        assert os[os.index(value)] == value
+
+
 def test_index_error():
     os = OrderedSet(range(10))
     with pytest.raises(ValueError):

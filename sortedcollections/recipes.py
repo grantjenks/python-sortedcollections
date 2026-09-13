@@ -243,7 +243,7 @@ class OrderedSet(abc.MutableSet, abc.Sequence):
         "Return index of value."
         # pylint: disable=arguments-differ
         try:
-            return self._keys[value]
+            return self._nums.index(self._keys[value])
         except KeyError:
             raise ValueError(f'{value!r} is not in {type(self).__name__}')
 
