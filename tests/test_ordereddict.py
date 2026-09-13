@@ -164,3 +164,18 @@ def test_equality():
     assert od != {}
     assert od != OrderedDict()
     od._check()
+
+
+def test_inplace_union():
+    od = OrderedDict([('first', 1), ('second', 2)])
+    original = od
+    od |= {'first': 3, 'third': 4}
+    assert od is original
+    assert list(od.items()) == [('first', 3), ('second', 2), ('third', 4)]
+    assert list(reversed(od)) == ['third', 'second', 'first']
+    assert od.keys()[2] == 'third'
+    del od['third']
+    od._check()
+    od |= [('fourth', 5)]
+    assert od.popitem() == ('fourth', 5)
+    od._check()
