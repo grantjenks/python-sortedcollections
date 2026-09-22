@@ -115,9 +115,11 @@ class OrderedDict(dict):
         """Remove and return (key, value) item pair.
 
         Pairs are returned in LIFO order if last is True or FIFO order if
-        False.
+        False. Raise KeyError if the mapping is empty.
 
         """
+        if not self:
+            raise KeyError('dictionary is empty')
         index = -1 if last else 0
         num = self._keys_view[index]
         key = self._nums[num]

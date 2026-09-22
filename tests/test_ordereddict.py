@@ -73,6 +73,27 @@ def test_popitem():
         od._check()
 
 
+@pytest.mark.parametrize('last', [False, True])
+@pytest.mark.parametrize('state', ['new', 'cleared', 'drained'])
+def test_popitem_empty(last, state):
+    od = OrderedDict()
+    if state != 'new':
+        od['a'] = 1
+        if state == 'cleared':
+            od.clear()
+        else:
+            assert od.popitem(last=last) == ('a', 1)
+
+    with pytest.raises(KeyError):
+        od.popitem(last=last)
+    assert not od
+    od._check()
+
+    od['b'] = 2
+    assert od.popitem(last=last) == ('b', 2)
+    od._check()
+
+
 def test_keys():
     od = OrderedDict(enumerate(range(10)))
     assert list(reversed(od.keys())) == list(reversed(range(10)))
